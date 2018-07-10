@@ -47,9 +47,9 @@ class ReporterBuilder {
   std::shared_ptr<Reporter> Build();
 
  private:
-  static const uint32_t DEFAULT_MAX_QUEUE_SIZE = 1024;
-  static const uint16_t DEFAULT_MAX_PACKET_SIZE = 1440;
-  static const uint16_t DEFAULT_PORT = 9052;
+  static const uint32_t DEFAULT_MAX_QUEUE_SIZE;
+  static const uint16_t DEFAULT_MAX_PACKET_SIZE;
+  static const uint16_t DEFAULT_PORT;
   static const char DEFAULT_HOST[];
   static const std::map<std::string, std::string> DEFAULT_COMMON_TAGS;
 

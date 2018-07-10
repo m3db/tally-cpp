@@ -22,6 +22,9 @@
 
 namespace m3 {
 
+const uint32_t ReporterBuilder::DEFAULT_MAX_QUEUE_SIZE = 1024;
+const uint16_t ReporterBuilder::DEFAULT_MAX_PACKET_SIZE = 1440;
+const uint16_t ReporterBuilder::DEFAULT_PORT = 9052;
 const char ReporterBuilder::DEFAULT_HOST[] = "127.0.0.1";
 const std::map<std::string, std::string> ReporterBuilder::DEFAULT_COMMON_TAGS =
     {};
