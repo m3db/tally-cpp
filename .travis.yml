@@ -1,0 +1,21 @@
+sudo: required
+dist: trusty
+language: cpp
+
+# Install Bazel.
+install:
+  - sudo apt-get update
+  - sudo apt-get install pkg-config zip g++ zlib1g-dev unzip python
+  - sudo add-apt-repository -y ppa:webupd8team/java
+  - sudo apt-get update && sudo apt-get install oracle-java8-installer
+  - sudo echo "deb [arch=amd64] http://storage.googleapis.com/bazel-apt stable jdk1.8" | sudo tee /etc/apt/sources.list.d/bazel.list
+  - curl https://storage.googleapis.com/bazel-apt/doc/apt-key.pub.gpg | sudo apt-key add -
+  - sudo apt-get update && sudo apt-get install bazel
+
+compiler:
+  - clang
+  - gcc
+
+script:
+  - bazel build //...
+  # - bazel test //...
