@@ -82,26 +82,20 @@ TEST_F(ReporterTest, ReportCounter) {
   reporter_->Flush();
 
   while (true) {
-    std::unique_lock<std::mutex> lock(server_->handler->mutex_);
-    if (server_->handler->batches_.size() > 0) {
+    if (!server_->isEmpty()) {
       break;
     }
-    lock.unlock();
-
     reporter_->Flush();
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
   }
 
-  std::lock_guard<std::mutex> lock(server_->handler->mutex_);
-  auto batch = server_->handler->batches_[0];
+  auto batch = server_->getBatch();
   auto metric = batch.metrics[0];
   EXPECT_EQ(name, metric.name);
   EXPECT_EQ(expected_tags, metric.tags);
   auto metric_value = metric.metricValue;
   EXPECT_TRUE(metric_value.__isset.count);
   EXPECT_EQ(value, metric_value.count.i64Value);
-
-  server_->handler->batches_.clear();
 }
 
 TEST_F(ReporterTest, ReportGauge) {
@@ -121,26 +115,21 @@ TEST_F(ReporterTest, ReportGauge) {
   reporter_->Flush();
 
   while (true) {
-    std::unique_lock<std::mutex> lock(server_->handler->mutex_);
-    if (server_->handler->batches_.size() > 0) {
+    if (!server_->isEmpty()) {
       break;
     }
-    lock.unlock();
 
     reporter_->Flush();
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
   }
 
-  std::lock_guard<std::mutex> lock(server_->handler->mutex_);
-  auto batch = server_->handler->batches_[0];
+  auto batch = server_->getBatch();
   auto metric = batch.metrics[0];
   EXPECT_EQ(name, metric.name);
   EXPECT_EQ(expected_tags, metric.tags);
   auto metric_value = metric.metricValue;
   EXPECT_TRUE(metric_value.__isset.gauge);
   EXPECT_EQ(value, metric_value.gauge.dValue);
-
-  server_->handler->batches_.clear();
 }
 
 TEST_F(ReporterTest, ReportTimer) {
@@ -160,26 +149,21 @@ TEST_F(ReporterTest, ReportTimer) {
   reporter_->Flush();
 
   while (true) {
-    std::unique_lock<std::mutex> lock(server_->handler->mutex_);
-    if (server_->handler->batches_.size() > 0) {
+    if (!server_->isEmpty()) {
       break;
     }
-    lock.unlock();
 
     reporter_->Flush();
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
   }
 
-  std::lock_guard<std::mutex> lock(server_->handler->mutex_);
-  auto batch = server_->handler->batches_[0];
+  auto batch = server_->getBatch();
   auto metric = batch.metrics[0];
   EXPECT_EQ(name, metric.name);
   EXPECT_EQ(expected_tags, metric.tags);
   auto metric_value = metric.metricValue;
   EXPECT_TRUE(metric_value.__isset.timer);
   EXPECT_EQ(value.count(), metric_value.timer.i64Value);
-
-  server_->handler->batches_.clear();
 }
 
 TEST_F(ReporterTest, ReportHistogramValueSamples) {
@@ -209,26 +193,21 @@ TEST_F(ReporterTest, ReportHistogramValueSamples) {
   reporter_->Flush();
 
   while (true) {
-    std::unique_lock<std::mutex> lock(server_->handler->mutex_);
-    if (server_->handler->batches_.size() > 0) {
+    if (!server_->isEmpty()) {
       break;
     }
-    lock.unlock();
 
     reporter_->Flush();
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
   }
 
-  std::lock_guard<std::mutex> lock(server_->handler->mutex_);
-  auto batch = server_->handler->batches_[0];
+  auto batch = server_->getBatch();
   auto metric = batch.metrics[0];
   EXPECT_EQ(name, metric.name);
   EXPECT_EQ(expected_tags, metric.tags);
   auto metric_value = metric.metricValue;
   EXPECT_TRUE(metric_value.__isset.count);
   EXPECT_EQ(value, metric_value.count.i64Value);
-
-  server_->handler->batches_.clear();
 }
 
 TEST_F(ReporterTest, ReportHistogramDurationSamples) {
@@ -260,24 +239,19 @@ TEST_F(ReporterTest, ReportHistogramDurationSamples) {
   reporter_->Flush();
 
   while (true) {
-    std::unique_lock<std::mutex> lock(server_->handler->mutex_);
-    if (server_->handler->batches_.size() > 0) {
+    if (!server_->isEmpty()) {
       break;
     }
-    lock.unlock();
 
     reporter_->Flush();
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
   }
 
-  std::lock_guard<std::mutex> lock(server_->handler->mutex_);
-  auto batch = server_->handler->batches_[0];
+  auto batch = server_->getBatch();
   auto metric = batch.metrics[0];
   EXPECT_EQ(name, metric.name);
   EXPECT_EQ(expected_tags, metric.tags);
   auto metric_value = metric.metricValue;
   EXPECT_TRUE(metric_value.__isset.count);
   EXPECT_EQ(value, metric_value.count.i64Value);
-
-  server_->handler->batches_.clear();
 }

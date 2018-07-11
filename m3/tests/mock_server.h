@@ -41,10 +41,10 @@ using apache::thrift::transport::TTransportException;
 class MockServer {
  public:
   MockServer(const std::string& host, uint16_t port) : stopped_(false) {
-    handler =
+    handler_ =
         apache::thrift::stdcxx::shared_ptr<MockHandler>(new MockHandler());
     processor_ = apache::thrift::stdcxx::shared_ptr<TProcessor>(
-        new tally::m3::thrift::M3Processor(handler));
+        new tally::m3::thrift::M3Processor(handler_));
     transport_ = apache::thrift::stdcxx::shared_ptr<tally::m3::TUDPTransport>(
         new tally::m3::TUDPTransport(
             host, port, tally::m3::TUDPTransport::Kind::Server, 1440));
@@ -90,13 +90,16 @@ class MockServer {
     transport_->close();
   }
 
-  uint16_t port() { return transport_->port(); }
+  bool isEmpty() { return handler_->isEmpty(); }
 
-  apache::thrift::stdcxx::shared_ptr<MockHandler> handler;
+  tally::m3::thrift::MetricBatch getBatch() { return handler_->getBatch(); }
+
+  uint16_t port() { return transport_->port(); }
 
  private:
   apache::thrift::stdcxx::shared_ptr<TProcessor> processor_;
   apache::thrift::stdcxx::shared_ptr<tally::m3::TUDPTransport> transport_;
+  apache::thrift::stdcxx::shared_ptr<MockHandler> handler_;
 
   std::mutex mutex_;
   bool stopped_;

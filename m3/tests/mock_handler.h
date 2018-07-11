@@ -34,6 +34,19 @@ class MockHandler : virtual public tally::m3::thrift::M3If {
     batches_.push_back(batch);
   }
 
+  bool isEmpty() {
+    std::lock_guard<std::mutex> lock(mutex_);
+    return batches_.size() == 0;
+  }
+
+  tally::m3::thrift::MetricBatch getBatch() {
+    std::lock_guard<std::mutex> lock(mutex_);
+    auto batch = batches_[0];
+    batches_.clear();
+    return batch;
+  }
+
+ private:
   std::mutex mutex_;
   std::vector<tally::m3::thrift::MetricBatch> batches_;
 };
