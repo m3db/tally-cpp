@@ -26,9 +26,9 @@ matrix:
   - os: linux
     env:
       - TEST="Clang"
-      - CXX="clang++"
-      - CC="clang"
     script:
+      - export CXX="clang++"
+      - export CC="clang"
       - clang --version
       - bazel version
       - bazel build //...
@@ -37,9 +37,9 @@ matrix:
   - os: linux
     env:
       - TEST="GCC"
-      - CXX="g++"
-      - CC="gcc"
     script:
+      - export CXX="g++"
+      - export CC="gcc"
       - gcc --version
       - bazel version
       - bazel build //...
