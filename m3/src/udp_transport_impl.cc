@@ -235,7 +235,7 @@ void TUDPTransport::Impl::write_async() {
   }
 
   // Add predicate to wait to avoid spurious wakeup.
-  submit_cv_.wait(lock, [this] { return !open_ || main_buffer_.size() != 0; });
+  submit_cv_.wait(lock, [this] { return in_progress_ || !open_; });
   if (!open_) {
     return;
   }

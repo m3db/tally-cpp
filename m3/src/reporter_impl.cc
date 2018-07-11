@@ -334,8 +334,7 @@ void Reporter::Impl::Run() {
   std::shared_ptr<TCalcTransport> calc_transport(new TCalcTransport());
 
   std::unique_lock<std::mutex> run_lock(run_mutex_);
-  while (run_) {
-    cv_.wait(run_lock);
+  while (true) {
     if (!run_) {
       // When the reporter is closed, this thread needs to drain the queue and
       // flush any buffered metrics before it exits.
@@ -367,6 +366,10 @@ void Reporter::Impl::Run() {
       queue_lock.lock();
       queue_.pop();
     }
+
+    // Wait on condition variable at the end of the loop in case any metrics
+    // were enqueued before the Run thread was started.
+    cv_.wait(run_lock);
   }
 }
 
@@ -411,19 +414,16 @@ void Reporter::Impl::Flush() {
 }
 
 void Reporter::Impl::Enqueue(thrift::Metric metric) {
-  {
-    std::lock_guard<std::mutex> lock(run_mutex_);
-    if (!run_) {
-      // This should never occur as the Reporter is only closed when it's
-      // destructor is called which occurs only when no references to it remain.
-      std::cerr << "Enqueue should never be called when the M3 reporter is not "
-                   "running"
-                << std::endl;
-      return;
-    }
+  std::lock_guard<std::mutex> lock(run_mutex_);
+  if (!run_) {
+    // This should never occur as the Reporter is only closed when it's
+    // destructor is called which occurs only when no references to it remain.
+    std::cerr << "Enqueue should never be called when the M3 reporter is not "
+                 "running"
+              << std::endl;
+    return;
   }
 
-  std::lock_guard<std::mutex> lock(queue_mutex_);
   if (queue_.size() == max_queue_size_) {
     std::cerr << "Failed to enqueue metric because queue is full" << std::endl;
     return;
