@@ -234,10 +234,12 @@ void TUDPTransport::Impl::write_async() {
     return;
   }
 
-  // Add predicate to wait to avoid spurious wakeup.
-  submit_cv_.wait(lock, [this] { return in_progress_ || !open_; });
-  if (!open_) {
-    return;
+  if (!in_progress_) {
+    // Add predicate to wait to avoid spurious wakeup.
+    submit_cv_.wait(lock, [this] { return in_progress_ || !open_; });
+    if (!open_) {
+      return;
+    }
   }
 
   help_buffer_.insert(help_buffer_.end(), main_buffer_.begin(),
