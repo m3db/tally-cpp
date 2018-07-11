@@ -1,6 +1,11 @@
 #!/bin/bash
 
-# Thrift version should be 0.11.0.
+VERSION=$(thrift --version)
+if [ "$VERSION" != "Thrift version 0.11.0" ]; then
+    echo "Thrift version is not 0.11.0, exiting."
+    exit 1
+fi
+
 thrift --gen cpp --out . m3.thrift
 
 # Update include paths.
