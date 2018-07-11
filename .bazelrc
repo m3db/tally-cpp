@@ -1,5 +1,5 @@
 # Address sanitizer
-# To use it: bazel build --config asan
+# To use it: bazel build --config asan //...
 build:asan --strip=never
 build:asan --copt -fsanitize=address
 build:asan --copt -DADDRESS_SANITIZER

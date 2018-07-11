@@ -141,7 +141,4 @@ TEST(ScopeImplTest, ReportEvery) {
   gauge->Update(1.0);
   timer->Record(std::chrono::nanoseconds(1));
   histogram->Record(2.5);
-
-  // Wait for background thread to emit metrics.
-  std::this_thread::sleep_for(std::chrono::seconds(3));
 }

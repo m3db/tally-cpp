@@ -197,13 +197,17 @@ std::string ScopeImpl::ScopeID(const std::string &prefix,
 }
 
 void ScopeImpl::Run() {
-  std::unique_lock<std::mutex> running_lock(running_mutex_);
-  while (running_) {
-    if (!cv_.wait_for(running_lock, interval_, [this] { return !running_; })) {
-      running_lock.unlock();
-      Report();
-      reporter_->Flush();
-      running_lock.lock();
+  while (true) {
+    std::unique_lock<std::mutex> running_lock(running_mutex_);
+    cv_.wait_for(running_lock, interval_);
+
+    Report();
+    reporter_->Flush();
+
+    // Check if the run loop has been stopped after flushing metrics so we can
+    // ensure no buffered metrics were lost.
+    if (!running_) {
+      return;
     }
   }
 }
