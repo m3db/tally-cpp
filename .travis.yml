@@ -13,13 +13,34 @@ install:
   - sudo apt-get update && sudo apt-get install bazel
   - sudo apt-get install cppcheck
 
-compiler:
-  - clang
-  - gcc
-
-script:
-  - cppcheck --version
-  - cppcheck --inline-suppr --enable=all --error-exitcode=1 -I m3/include/ -I tally/include/ -i m3/include/m3/thrift/ --suppress='*:m3/include/m3/thrift/*' m3/ tally/
-  - bazel version
-  - bazel build //...
-  - bazel test --test_output=all --test_timeout=60 //...
+matrix:
+  include:
+  # CppCheck
+  - os: linux
+    env:
+      - TEST="CppCheck"
+    script:
+      - cppcheck --version
+      - cppcheck --inline-suppr --enable=all --error-exitcode=1 -I m3/include/ -I tally/include/ -i m3/include/m3/thrift/ --suppress='*:m3/include/m3/thrift/*' m3/ tally/
+  # Clang
+  - os: linux
+    env:
+      - TEST="Clang"
+      - CXX="clang++"
+      - CC="clang"
+    script:
+      - clang --version
+      - bazel version
+      - bazel build //...
+      - bazel test --test_output=all --test_timeout=60 //...
+  # GCC
+  - os: linux
+    env:
+      - TEST="GCC"
+      - CXX="g++"
+      - CC="gcc"
+    script:
+      - gcc --version
+      - bazel version
+      - bazel build //...
+      - bazel test --test_output=all --test_timeout=60 //...
