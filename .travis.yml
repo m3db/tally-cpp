@@ -44,3 +44,14 @@ matrix:
       - bazel version
       - bazel build //...
       - bazel test --test_output=all --test_timeout=60 //...
+  # Address Sanitizer
+  - os: linux
+    env:
+      - TEST="Clang"
+    script:
+      - export CXX="clang++"
+      - export CC="clang"
+      - clang --version
+      - bazel version
+      - bazel build //... --config asan
+      - bazel test --test_output=all --test_timeout=60 //... --config asan
