@@ -33,9 +33,7 @@ namespace m3 {
 
 class Reporter : public tally::StatsReporter {
  public:
-  Reporter(const std::string &host, uint16_t port,
-           const std::map<std::string, std::string> &common_tags,
-           uint32_t max_queue_size, uint16_t max_packet_size);
+  friend class ReporterBuilder;
 
   ~Reporter();
 
@@ -73,6 +71,10 @@ class Reporter : public tally::StatsReporter {
       std::chrono::nanoseconds buckets_upper_bound, uint64_t samples) override;
 
  private:
+  Reporter(const std::string &host, uint16_t port,
+           const std::map<std::string, std::string> &common_tags,
+           uint32_t max_queue_size, uint16_t max_packet_size);
+
   class Impl;
   std::unique_ptr<Impl> impl_;
 };
