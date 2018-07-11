@@ -20,6 +20,7 @@
 
 #include "m3/src/calc_transport.h"
 
+namespace tally {
 namespace m3 {
 
 TCalcTransport::TCalcTransport() : written_(0) {}
@@ -43,3 +44,5 @@ void TCalcTransport::flush() { written_ = 0; }
 uint32_t TCalcTransport::size() { return written_; }
 
 }  // namespace m3
+
+}  // namespace tally

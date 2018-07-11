@@ -23,6 +23,8 @@
 #include "thrift/transport/TTransport.h"
 #include "thrift/transport/TVirtualTransport.h"
 
+namespace tally {
+
 namespace m3 {
 
 class TCalcTransport : public apache::thrift::transport::TTransport {
@@ -56,3 +58,5 @@ class TCalcTransport : public apache::thrift::transport::TTransport {
 };
 
 }  // namespace m3
+
+}  // namespace tally

@@ -1,4 +1,4 @@
-namespace cpp m3.thrift
+namespace cpp tally.m3.thrift
 
 /**
 * Different types of count values

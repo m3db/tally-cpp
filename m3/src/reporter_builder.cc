@@ -20,6 +20,8 @@
 
 #include "m3/reporter_builder.h"
 
+namespace tally {
+
 namespace m3 {
 
 const uint32_t ReporterBuilder::DEFAULT_MAX_QUEUE_SIZE = 1024;
@@ -68,3 +70,5 @@ std::shared_ptr<Reporter> ReporterBuilder::Build() {
 }
 
 }  // namespace m3
+
+}  // namespace tally

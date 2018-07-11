@@ -12,7 +12,7 @@ using namespace ::apache::thrift::protocol;
 using namespace ::apache::thrift::transport;
 using namespace ::apache::thrift::server;
 
-using namespace  ::m3::thrift;
+using namespace  ::tally::m3::thrift;
 
 class M3Handler : virtual public M3If {
  public:
@@ -22,7 +22,7 @@ class M3Handler : virtual public M3If {
 
   /**
    * Emits a batch of metrics.
-   *
+   * 
    * @param batch
    */
   void emitMetricBatch(const MetricBatch& batch) {

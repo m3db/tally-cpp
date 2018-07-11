@@ -6,7 +6,7 @@
  */
 #include "m3/thrift/M3.h"
 
-namespace m3 { namespace thrift {
+namespace tally { namespace m3 { namespace thrift {
 
 
 M3_emitMetricBatch_args::~M3_emitMetricBatch_args() throw() {
@@ -191,5 +191,5 @@ void M3ConcurrentClient::send_emitMetricBatch(const MetricBatch& batch)
   sentry.commit();
 }
 
-}} // namespace
+}}} // namespace
 

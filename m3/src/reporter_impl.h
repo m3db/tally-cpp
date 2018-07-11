@@ -41,6 +41,7 @@
 
 using apache::thrift::transport::TTransport;
 
+namespace tally {
 namespace m3 {
 
 class Reporter::Impl : public tally::StatsReporter {
@@ -141,3 +142,5 @@ class Reporter::Impl : public tally::StatsReporter {
 };
 
 }  // namespace m3
+
+}  // namespace tally

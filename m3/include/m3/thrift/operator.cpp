@@ -20,24 +20,23 @@
 
 #include "m3/thrift/m3_types.h"
 
+namespace tally {
+
 namespace m3 {
 
-namespace thrift
-{
+namespace thrift {
 
 // This code is not auto-generated but is required to use MetricTag objects.
-bool MetricTag::operator<(MetricTag const &other) const
-{
-    if (this->tagName == other.tagName)
-    {
-        return this->tagValue < other.tagValue;
-    }
-    else
-    {
-        return this->tagName < other.tagName;
-    }
+bool MetricTag::operator<(MetricTag const &other) const {
+  if (this->tagName == other.tagName) {
+    return this->tagValue < other.tagValue;
+  } else {
+    return this->tagName < other.tagName;
+  }
 }
 
-} // namespace thrift
+}  // namespace thrift
 
-} // namespace m3
+}  // namespace m3
+
+}  // namespace tally

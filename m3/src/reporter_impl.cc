@@ -37,6 +37,8 @@
 using apache::thrift::protocol::TCompactProtocol;
 using apache::thrift::transport::TTransportException;
 
+namespace tally {
+
 namespace m3 {
 
 const char Reporter::Impl::HISTOGRAM_BUCKET_NAME[] = "bucket";
@@ -432,3 +434,5 @@ void Reporter::Impl::Enqueue(thrift::Metric metric) {
 }
 
 }  // namespace m3
+
+}  // namespace tally

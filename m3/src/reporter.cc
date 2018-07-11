@@ -27,6 +27,8 @@
 #include "m3/src/reporter_impl.h"
 #include "tally/src/capable_of.h"
 
+namespace tally {
+
 namespace m3 {
 
 Reporter::Reporter(const std::string &host, uint16_t port,
@@ -81,3 +83,5 @@ void Reporter::ReportHistogramDurationSamples(
 }
 
 }  // namespace m3
+
+}  // namespace tally

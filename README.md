@@ -36,7 +36,7 @@ ingestion pipeline. A default implementation for emitting tagged metrics using T
 int main(int argc, char** argv) {
   // Create a reporter that will be used to emit your metrics.
   auto reporter =
-      m3::ReporterBuilder()
+      tally::m3::ReporterBuilder()
           .host("127.0.0.1")
           .port(9052)
           .common_tags({{"service", "statsdex"}, {"env", "production"}})

@@ -11,11 +11,11 @@
 #include <thrift/async/TConcurrentClientSyncInfo.h>
 #include "m3/thrift/m3_types.h"
 
-namespace m3 { namespace thrift {
+namespace tally { namespace m3 { namespace thrift {
 
 #ifdef _MSC_VER
   #pragma warning( push )
-  #pragma warning (disable : 4250 ) //inheriting methods via dominance
+  #pragma warning (disable : 4250 ) //inheriting methods via dominance 
 #endif
 
 class M3If {
@@ -24,7 +24,7 @@ class M3If {
 
   /**
    * Emits a batch of metrics.
-   *
+   * 
    * @param batch
    */
   virtual void emitMetricBatch(const MetricBatch& batch) = 0;
@@ -239,6 +239,6 @@ class M3ConcurrentClient : virtual public M3If {
   #pragma warning( pop )
 #endif
 
-}} // namespace
+}}} // namespace
 
 #endif

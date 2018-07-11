@@ -27,6 +27,8 @@
 
 #include "tally/stats_reporter.h"
 
+namespace tally {
+
 namespace m3 {
 
 class Reporter : public tally::StatsReporter {
@@ -76,3 +78,5 @@ class Reporter : public tally::StatsReporter {
 };
 
 }  // namespace m3
+
+}  // namespace tally

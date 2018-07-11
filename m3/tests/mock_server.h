@@ -44,10 +44,10 @@ class MockServer {
     handler =
         apache::thrift::stdcxx::shared_ptr<MockHandler>(new MockHandler());
     processor_ = apache::thrift::stdcxx::shared_ptr<TProcessor>(
-        new m3::thrift::M3Processor(handler));
-    transport_ = apache::thrift::stdcxx::shared_ptr<m3::TUDPTransport>(
-        new m3::TUDPTransport(host, port, m3::TUDPTransport::Kind::Server,
-                              1440));
+        new tally::m3::thrift::M3Processor(handler));
+    transport_ = apache::thrift::stdcxx::shared_ptr<tally::m3::TUDPTransport>(
+        new tally::m3::TUDPTransport(
+            host, port, tally::m3::TUDPTransport::Kind::Server, 1440));
     transport_->open();
   }
 
@@ -96,7 +96,7 @@ class MockServer {
 
  private:
   apache::thrift::stdcxx::shared_ptr<TProcessor> processor_;
-  apache::thrift::stdcxx::shared_ptr<m3::TUDPTransport> transport_;
+  apache::thrift::stdcxx::shared_ptr<tally::m3::TUDPTransport> transport_;
 
   std::mutex mutex_;
   bool stopped_;

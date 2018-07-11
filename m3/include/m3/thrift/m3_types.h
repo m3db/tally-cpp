@@ -18,7 +18,7 @@
 #include <thrift/stdcxx.h>
 
 
-namespace m3 { namespace thrift {
+namespace tally { namespace m3 { namespace thrift {
 
 class CountValue;
 
@@ -408,6 +408,6 @@ void swap(MetricBatch &a, MetricBatch &b);
 
 std::ostream& operator<<(std::ostream& out, const MetricBatch& obj);
 
-}} // namespace
+}}} // namespace
 
 #endif
