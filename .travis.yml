@@ -2,7 +2,7 @@ sudo: required
 dist: trusty
 language: cpp
 
-# Install Bazel.
+# Install Bazel and cppcheck.
 install:
   - sudo apt-get update
   - sudo apt-get install pkg-config zip g++ zlib1g-dev unzip python
@@ -11,11 +11,13 @@ install:
   - sudo echo "deb [arch=amd64] http://storage.googleapis.com/bazel-apt stable jdk1.8" | sudo tee /etc/apt/sources.list.d/bazel.list
   - curl https://storage.googleapis.com/bazel-apt/doc/apt-key.pub.gpg | sudo apt-key add -
   - sudo apt-get update && sudo apt-get install bazel
+  - sudo apt-get install cppcheck
 
 compiler:
   - clang
   - gcc
 
 script:
+  - cppcheck --inline-suppr --enable=all -I m3/include/ -I tally/include/ -i m3/include/m3/thrift/ --suppress='*:m3/include/m3/thrift/*' m3/ tally/
   - bazel build //...
   - bazel test --test_output=all --test_timeout=60 //...
