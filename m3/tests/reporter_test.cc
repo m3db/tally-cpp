@@ -44,17 +44,17 @@
 
 class ReporterTest : public ::testing::Test {
  protected:
-  // cppcheck-suppress unusedFunction
   virtual void SetUp() {
     server_ = std::shared_ptr<MockServer>(new MockServer("127.0.0.1", 0));
     thread_ = std::thread([this]() { server_->serve(); });
     reporter_ = tally::m3::ReporterBuilder()
                     .host("127.0.0.1")
                     .port(server_->port())
+                    .max_queue_size(1000)
+                    .max_packet_size(1024)
                     .Build();
   }
 
-  // cppcheck-suppress unusedFunction
   virtual void TearDown() {
     server_->stop();
     thread_.join();

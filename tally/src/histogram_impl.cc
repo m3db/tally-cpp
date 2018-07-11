@@ -101,9 +101,8 @@ HistogramImpl::Bucket::Bucket(Buckets::Kind kind, uint64_t bucket_id,
       bucket_id_(bucket_id),
       num_buckets_(num_buckets),
       lower_bound_(lower_bound),
-      upper_bound_(upper_bound) {
-  samples_ = std::shared_ptr<CounterImpl>(new CounterImpl());
-}
+      upper_bound_(upper_bound),
+      samples_(new CounterImpl()) {}
 
 void HistogramImpl::Bucket::Record() { samples_->Inc(1); }
 

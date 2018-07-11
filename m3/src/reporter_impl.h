@@ -99,7 +99,7 @@ class Reporter::Impl : public tally::StatsReporter {
 
   // Helper methods used when processing metrics.
   void ReportMetric(const std::string &name,
-                    const std::set<thrift::MetricTag> tags,
+                    const std::set<thrift::MetricTag> &tags,
                     thrift::MetricValue value);
 
   thrift::MetricValue CreateCounter(int64_t value);

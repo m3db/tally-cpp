@@ -163,7 +163,7 @@ void Reporter::Impl::ReportHistogramDurationSamples(
 }
 
 void Reporter::Impl::ReportMetric(const std::string &name,
-                                  const std::set<thrift::MetricTag> tags,
+                                  const std::set<thrift::MetricTag> &tags,
                                   thrift::MetricValue value) {
   thrift::Metric metric;
   metric.__set_name(name);

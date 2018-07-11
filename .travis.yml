@@ -18,6 +18,8 @@ compiler:
   - gcc
 
 script:
-  - cppcheck --inline-suppr --enable=all -I m3/include/ -I tally/include/ -i m3/include/m3/thrift/ --suppress='*:m3/include/m3/thrift/*' m3/ tally/
+  - cppcheck --version
+  - cppcheck --inline-suppr --enable=all --error-exitcode=1 -I m3/include/ -I tally/include/ -i m3/include/m3/thrift/ --suppress='*:m3/include/m3/thrift/*' m3/ tally/
+  - bazel version
   - bazel build //...
   - bazel test --test_output=all --test_timeout=60 //...
