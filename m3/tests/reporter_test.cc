@@ -82,12 +82,14 @@ TEST_F(ReporterTest, ReportCounter) {
   reporter_->Flush();
 
   while (true) {
-    std::lock_guard<std::mutex> lock(server_->handler->mutex_);
+    std::unique_lock<std::mutex> lock(server_->handler->mutex_);
     if (server_->handler->batches_.size() > 0) {
       break;
     }
+    lock.unlock();
+
     reporter_->Flush();
-    std::this_thread::sleep_for(std::chrono::milliseconds(10));
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
   }
 
   std::lock_guard<std::mutex> lock(server_->handler->mutex_);
@@ -119,12 +121,14 @@ TEST_F(ReporterTest, ReportGauge) {
   reporter_->Flush();
 
   while (true) {
-    std::lock_guard<std::mutex> lock(server_->handler->mutex_);
+    std::unique_lock<std::mutex> lock(server_->handler->mutex_);
     if (server_->handler->batches_.size() > 0) {
       break;
     }
+    lock.unlock();
+
     reporter_->Flush();
-    std::this_thread::sleep_for(std::chrono::milliseconds(10));
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
   }
 
   std::lock_guard<std::mutex> lock(server_->handler->mutex_);
@@ -156,12 +160,14 @@ TEST_F(ReporterTest, ReportTimer) {
   reporter_->Flush();
 
   while (true) {
-    std::lock_guard<std::mutex> lock(server_->handler->mutex_);
+    std::unique_lock<std::mutex> lock(server_->handler->mutex_);
     if (server_->handler->batches_.size() > 0) {
       break;
     }
+    lock.unlock();
+
     reporter_->Flush();
-    std::this_thread::sleep_for(std::chrono::milliseconds(10));
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
   }
 
   std::lock_guard<std::mutex> lock(server_->handler->mutex_);
@@ -203,12 +209,14 @@ TEST_F(ReporterTest, ReportHistogramValueSamples) {
   reporter_->Flush();
 
   while (true) {
-    std::lock_guard<std::mutex> lock(server_->handler->mutex_);
+    std::unique_lock<std::mutex> lock(server_->handler->mutex_);
     if (server_->handler->batches_.size() > 0) {
       break;
     }
+    lock.unlock();
+
     reporter_->Flush();
-    std::this_thread::sleep_for(std::chrono::milliseconds(10));
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
   }
 
   std::lock_guard<std::mutex> lock(server_->handler->mutex_);
@@ -252,12 +260,14 @@ TEST_F(ReporterTest, ReportHistogramDurationSamples) {
   reporter_->Flush();
 
   while (true) {
-    std::lock_guard<std::mutex> lock(server_->handler->mutex_);
+    std::unique_lock<std::mutex> lock(server_->handler->mutex_);
     if (server_->handler->batches_.size() > 0) {
       break;
     }
+    lock.unlock();
+
     reporter_->Flush();
-    std::this_thread::sleep_for(std::chrono::milliseconds(10));
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
   }
 
   std::lock_guard<std::mutex> lock(server_->handler->mutex_);
