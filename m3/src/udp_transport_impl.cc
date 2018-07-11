@@ -38,12 +38,7 @@ namespace m3 {
 
 TUDPTransport::Impl::Impl(const std::string &host, uint16_t port,
                           TUDPTransport::Kind kind, uint16_t max_packet_size)
-    : host_(host),
-      port_(port),
-      kind_(kind),
-      open_(false),
-      in_progress_(false),
-      bytes_sent_(-1) {
+    : host_(host), port_(port), kind_(kind), open_(false), in_progress_(false) {
   // Reserve space for 5 packets in the buffers.
   main_buffer_.reserve(max_packet_size * 5);
   help_buffer_.reserve(max_packet_size * 5);
@@ -127,9 +122,11 @@ uint32_t TUDPTransport::Impl::read_virt(uint8_t *buf, uint32_t len) {
   }
   in_progress_ = true;
 
+  // Add predicate to wait to avoid spurious wakeups.
   receive_cv_.wait(lock, [this] { return !open_ || main_buffer_.size() != 0; });
 
   if (!open_) {
+    in_progress_ = false;
     throw TTransportException(TTransportException::NOT_OPEN);
   }
 
@@ -203,7 +200,6 @@ void TUDPTransport::Impl::flush() {
     throw TTransportException(
         "TUDPTransport does not support concurrent send operations");
   }
-  in_progress_ = true;
 
   auto size = main_buffer_.size();
   if (size == 0) {
@@ -219,16 +215,17 @@ void TUDPTransport::Impl::flush() {
     throw TTransportException(TTransportException::UNKNOWN, msg.str());
   }
 
+  in_progress_ = true;
+
   submit_cv_.notify_one();
 
-  receive_cv_.wait(lock, [this] { return !open_ || bytes_sent_ != -1; });
+  receive_cv_.wait(lock);
+
+  in_progress_ = false;
 
   if (!open_) {
     throw TTransportException(TTransportException::NOT_OPEN);
   }
-
-  bytes_sent_ = -1;
-  in_progress_ = false;
 }
 
 void TUDPTransport::Impl::write_async() {
@@ -237,6 +234,7 @@ void TUDPTransport::Impl::write_async() {
     return;
   }
 
+  // Add predicate to wait to avoid spurious wakeup.
   submit_cv_.wait(lock, [this] { return !open_ || main_buffer_.size() != 0; });
   if (!open_) {
     return;
@@ -250,26 +248,22 @@ void TUDPTransport::Impl::write_async() {
       boost::asio::buffer(help_buffer_),
       [this](boost::system::error_code ec, std::size_t bytes_sent) {
         std::unique_lock<std::mutex> lock(mutex_);
-        if (!ec && bytes_sent > 0) {
-          bytes_sent_ = bytes_sent;
 
+        if (!ec && bytes_sent > 0) {
           if (bytes_sent == help_buffer_.size()) {
             help_buffer_.clear();
           } else {
             help_buffer_.erase(help_buffer_.begin(),
                                help_buffer_.begin() + bytes_sent);
           }
-
-          lock.unlock();
         } else {
-          bytes_sent = 0;
-          lock.unlock();
-
           if (ec) {
             std::cerr << "Encountered error sending Thrift UDP packet: " << ec
                       << std::endl;
           }
         }
+
+        lock.unlock();
 
         receive_cv_.notify_one();
         write_async();

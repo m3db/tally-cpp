@@ -92,8 +92,6 @@ class TUDPTransport::Impl : public apache::thrift::transport::TTransport {
 
   std::vector<uint8_t> main_buffer_;
   std::vector<uint8_t> help_buffer_;
-
-  int bytes_sent_;
 };
 
 }  // namespace m3
