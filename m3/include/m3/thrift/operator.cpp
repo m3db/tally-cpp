@@ -30,9 +30,9 @@ namespace thrift {
 bool MetricTag::operator<(MetricTag const &other) const {
   if (this->tagName == other.tagName) {
     return this->tagValue < other.tagValue;
-  } else {
-    return this->tagName < other.tagName;
   }
+
+  return this->tagName < other.tagName;
 }
 
 }  // namespace thrift
