@@ -19,4 +19,4 @@ build:tsan --copt -DDYNAMIC_ANNOTATIONS_EXTERNAL_IMPL=1
 build:tsan --copt -O0
 build:tsan --copt -fno-omit-frame-pointer
 build:tsan --linkopt -fsanitize=thread
-build:asan --cc_output_directory_tag=tsan
+build:tsan --cc_output_directory_tag=tsan
