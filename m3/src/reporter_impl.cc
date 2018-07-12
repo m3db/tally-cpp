@@ -73,7 +73,7 @@ Reporter::Impl::~Impl() {
   }
 
   // Wait for the background thread to finish.
-  cv_.notify_one();
+  bg_thread_cv_.notify_one();
   thread_.join();
 
   transport_->close();
@@ -369,7 +369,7 @@ void Reporter::Impl::Run() {
 
     // Wait on condition variable at the end of the loop in case any metrics
     // were enqueued before the Run thread was started.
-    cv_.wait(run_lock);
+    bg_thread_cv_.wait(run_lock);
   }
 }
 
@@ -430,7 +430,7 @@ void Reporter::Impl::Enqueue(thrift::Metric metric) {
   }
 
   queue_.push(metric);
-  cv_.notify_one();
+  bg_thread_cv_.notify_one();
 }
 
 }  // namespace m3

@@ -46,8 +46,8 @@ ScopeImpl::ScopeImpl(const std::string &prefix, const std::string &separator,
       reporter_((reporter == nullptr) ? NoopStatsReporter::New() : reporter),
       running_(false) {
   if (interval > std::chrono::seconds(0)) {
-    thread_ = std::thread(&ScopeImpl::Run, this);
     running_ = true;
+    thread_ = std::thread(&ScopeImpl::Run, this);
   }
 }
 

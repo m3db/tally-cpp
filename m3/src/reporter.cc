@@ -37,6 +37,8 @@ Reporter::Reporter(const std::string &host, uint16_t port,
     : impl_(new Reporter::Impl(host, port, common_tags, max_queue_size,
                                max_packet_size)) {}
 
+// Generate the default destructor here in the class file since the destructor
+// of the Impl class has now been defined.
 Reporter::~Reporter() = default;
 
 std::unique_ptr<tally::Capabilities> Reporter::Capabilities() {

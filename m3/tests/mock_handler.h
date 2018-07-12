@@ -34,7 +34,7 @@ class MockHandler : virtual public tally::m3::thrift::M3If {
     batches_.push_back(batch);
   }
 
-  bool isEmpty() {
+  bool empty() {
     std::lock_guard<std::mutex> lock(mutex_);
     return batches_.size() == 0;
   }

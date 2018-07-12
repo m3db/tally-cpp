@@ -90,7 +90,7 @@ class MockServer {
     transport_->close();
   }
 
-  bool isEmpty() { return handler_->isEmpty(); }
+  bool empty() { return handler_->empty(); }
 
   tally::m3::thrift::MetricBatch getBatch() { return handler_->getBatch(); }
 

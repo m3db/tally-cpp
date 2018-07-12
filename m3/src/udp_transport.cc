@@ -40,6 +40,8 @@ TUDPTransport::TUDPTransport(const std::string &host, uint16_t port,
                              TUDPTransport::Kind kind, uint16_t max_packet_size)
     : impl_(new TUDPTransport::Impl(host, port, kind, max_packet_size)) {}
 
+// Generate the default destructor here in the class file since the destructor
+// of the Impl class has now been defined.
 TUDPTransport::~TUDPTransport() = default;
 
 bool TUDPTransport::isOpen() { return impl_->isOpen(); }

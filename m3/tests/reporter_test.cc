@@ -51,7 +51,7 @@ class ReporterTest : public ::testing::Test {
                     .host("127.0.0.1")
                     .port(server_->port())
                     .max_queue_size(1000)
-                    .max_packet_size(1024)
+                    .max_packet_size(1440)
                     .Build();
   }
 
@@ -82,7 +82,7 @@ TEST_F(ReporterTest, ReportCounter) {
   reporter_->Flush();
 
   while (true) {
-    if (!server_->isEmpty()) {
+    if (!server_->empty()) {
       break;
     }
     reporter_->Flush();
@@ -115,7 +115,7 @@ TEST_F(ReporterTest, ReportGauge) {
   reporter_->Flush();
 
   while (true) {
-    if (!server_->isEmpty()) {
+    if (!server_->empty()) {
       break;
     }
 
@@ -149,7 +149,7 @@ TEST_F(ReporterTest, ReportTimer) {
   reporter_->Flush();
 
   while (true) {
-    if (!server_->isEmpty()) {
+    if (!server_->empty()) {
       break;
     }
 
@@ -193,7 +193,7 @@ TEST_F(ReporterTest, ReportHistogramValueSamples) {
   reporter_->Flush();
 
   while (true) {
-    if (!server_->isEmpty()) {
+    if (!server_->empty()) {
       break;
     }
 
@@ -239,7 +239,7 @@ TEST_F(ReporterTest, ReportHistogramDurationSamples) {
   reporter_->Flush();
 
   while (true) {
-    if (!server_->isEmpty()) {
+    if (!server_->empty()) {
       break;
     }
 

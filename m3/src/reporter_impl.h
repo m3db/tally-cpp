@@ -42,6 +42,7 @@
 using apache::thrift::transport::TTransport;
 
 namespace tally {
+
 namespace m3 {
 
 class Reporter::Impl : public tally::StatsReporter {
@@ -126,7 +127,7 @@ class Reporter::Impl : public tally::StatsReporter {
   const uint32_t max_queue_size_;
   const uint16_t max_packet_size_;
 
-  std::condition_variable cv_;
+  std::condition_variable bg_thread_cv_;
   std::thread thread_;
   std::shared_ptr<TUDPTransport> transport_;
 

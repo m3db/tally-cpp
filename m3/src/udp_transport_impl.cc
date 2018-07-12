@@ -61,7 +61,7 @@ void TUDPTransport::Impl::open() {
   udp::resolver::results_type endpoints =
       resolver.resolve(udp::v4(), host_, std::to_string(port_));
 
-  if (endpoints.size() == 0) {
+  if (endpoints.empty()) {
     throw TTransportException(TTransportException::BAD_ARGS);
   }
   auto endpoint = *endpoints.begin();
@@ -130,18 +130,18 @@ uint32_t TUDPTransport::Impl::read_virt(uint8_t *buf, uint32_t len) {
     throw TTransportException(TTransportException::NOT_OPEN);
   }
 
-  size_t n = std::min(static_cast<size_t>(len), main_buffer_.size());
+  auto offset = std::min(static_cast<size_t>(len), main_buffer_.size());
 
-  std::copy(main_buffer_.begin(), main_buffer_.begin() + n, buf);
+  std::copy(main_buffer_.begin(), main_buffer_.begin() + offset, buf);
 
-  if (n == main_buffer_.size()) {
+  if (offset == main_buffer_.size()) {
     main_buffer_.clear();
   } else {
-    main_buffer_.erase(main_buffer_.begin(), main_buffer_.begin() + n);
+    main_buffer_.erase(main_buffer_.begin(), main_buffer_.begin() + offset);
   }
 
   in_progress_ = false;
-  return n;
+  return offset;
 }
 
 void TUDPTransport::Impl::read_async() {
