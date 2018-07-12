@@ -39,18 +39,20 @@ class TCalcTransport : public apache::thrift::transport::TTransport {
   TCalcTransport &operator=(const TCalcTransport &) = delete;
 
   // Methods to implement the TTransport interface.
-  bool isOpen();
+  bool isOpen() override;
 
-  void open();
+  void open() override;
 
-  void close();
+  void close() override;
 
-  void write_virt(const uint8_t *buf, uint32_t len);
+  void write_virt(const uint8_t *buf, uint32_t len) override;
 
-  uint32_t writeEnd();
+  uint32_t writeEnd() override;
 
-  void flush();
+  void flush() override;
 
+  // size returns the number of bytes calc_transport has seen since the last
+  // flush.
   uint32_t size();
 
  private:

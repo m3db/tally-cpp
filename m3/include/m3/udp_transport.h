@@ -46,21 +46,21 @@ class TUDPTransport : public apache::thrift::transport::TTransport {
   TUDPTransport &operator=(const TUDPTransport &) = delete;
 
   // Methods to implement the TTransport interface.
-  bool isOpen();
+  bool isOpen() override;
 
-  void open();
+  void open() override;
 
-  void close();
+  void close() override;
 
-  uint32_t read_virt(uint8_t *buf, uint32_t len);
+  uint32_t read_virt(uint8_t *buf, uint32_t len) override;
 
-  void write_virt(const uint8_t *buf, uint32_t len);
+  void write_virt(const uint8_t *buf, uint32_t len) override;
 
-  uint32_t writeEnd();
+  uint32_t writeEnd() override;
 
-  void flush();
+  void flush() override;
 
-  // Helper method to get the local port that the transport is associated with.
+  // port returns local port that the transport is associated with.
   uint16_t port();
 
  private:
