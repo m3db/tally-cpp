@@ -85,8 +85,4 @@ BucketsIterator Buckets::end() const {
   return BucketsIterator(calculator_, num_);
 }
 
-uint64_t Buckets::size() const { return num_; }
-
-Buckets::Kind Buckets::kind() const { return kind_; }
-
 }  // namespace tally

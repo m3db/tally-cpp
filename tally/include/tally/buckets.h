@@ -58,9 +58,9 @@ class Buckets {
 
   BucketsIterator end() const;
 
-  uint64_t size() const;
+  uint64_t size() const { return num_; }
 
-  Kind kind() const;
+  Kind kind() const { return kind_; }
 
  private:
   Buckets(Kind kind, BucketsCalculator calculator, uint64_t num);
