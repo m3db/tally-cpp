@@ -63,6 +63,10 @@ matrix:
   - os: linux
     env:
       - TEST="Thread Sanitizer"
+    addons:
+      apt:
+        packages:
+        - libubsan
     script:
       - export CXX="clang++"
       - export CC="clang"
