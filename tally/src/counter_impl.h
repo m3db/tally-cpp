@@ -22,6 +22,7 @@
 
 #include <atomic>
 #include <cstdint>
+#include <mutex>
 #include <string>
 #include <unordered_map>
 
@@ -54,7 +55,10 @@ class CounterImpl : public Counter {
 
  private:
   std::atomic<std::int64_t> current_;
-  std::atomic<std::int64_t> previous_;
+
+  // previous_ is protected by mutex_;
+  std::mutex mutex_;
+  std::int64_t previous_;
 };
 
 }  // namespace tally

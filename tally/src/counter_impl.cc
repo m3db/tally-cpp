@@ -43,7 +43,11 @@ void CounterImpl::Report(
 
 int64_t CounterImpl::Value() {
   const auto current = current_.load();
-  const auto previous = previous_.exchange(current);
+
+  std::lock_guard<std::mutex> lock(mutex_);
+  const auto previous = previous_;
+  previous_ = current;
+
   return current - previous;
 }
 
