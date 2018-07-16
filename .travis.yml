@@ -70,28 +70,6 @@ matrix:
       - bazel version
       - bazel build //... --config tsan
       - bazel test --test_output=all --test_timeout=60 //... --config tsan
-  # Memory Sanitizer
-  - os: linux
-    env:
-      - TEST="Memory Sanitizer"
-    script:
-      - export CXX="clang++"
-      - export CC="clang"
-      - clang --version
-      - bazel version
-      - bazel build //... --config msan
-      - bazel test --test_output=all --test_timeout=60 //... --config msan
-  # Undefined Behavior Sanitizer
-  - os: linux
-    env:
-      - TEST="Undefined Behavior Sanitizer"
-    script:
-      - export CXX="clang++"
-      - export CC="clang"
-      - clang --version
-      - bazel version
-      - bazel build //... --config ubsan
-      - bazel test --test_output=all --test_timeout=60 //... --config ubsan
   # G++ 5
   - os: linux
     env:
@@ -184,11 +162,13 @@ matrix:
   - os: linux
     env:
       - TEST="Clang 6.0"
+    addons:
+      apt:
+        sources:
+          - llvm-toolchain-trusty-6.0
+        packages:
+          - clang-6.0
     script:
-      - wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
-      - sudo apt-add-repository "deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial-6.0 main"
-      - sudo apt-get update
-      - sudo apt-get install clang-6.0
       - export CXX="clang++-6.0"
       - export CC="clang-6.0"
       - clang --version
