@@ -20,7 +20,7 @@
 
 #pragma once
 
-#include <atomic>
+#include <mutex>
 #include <string>
 #include <unordered_map>
 
@@ -52,8 +52,9 @@ class CounterImpl : public Counter {
   std::int64_t Value();
 
  private:
-  std::atomic<std::int64_t> current_;
-  std::atomic<std::int64_t> previous_;
+  std::mutex mutex_;
+  std::int64_t current_;
+  std::int64_t previous_;
 };
 
 }  // namespace tally

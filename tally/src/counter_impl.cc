@@ -28,7 +28,10 @@ CounterImpl::CounterImpl() : current_(0), previous_(0) {}
 
 void CounterImpl::Inc() { Inc(1); }
 
-void CounterImpl::Inc(int64_t delta) { current_ += delta; }
+void CounterImpl::Inc(int64_t delta) {
+  std::lock_guard<std::mutex> lock(mutex_);
+  current_ += delta;
+}
 
 void CounterImpl::Report(
     const std::string &name,
@@ -41,17 +44,14 @@ void CounterImpl::Report(
 }
 
 int64_t CounterImpl::Value() {
-  // Load the previous value second so we don't lose any increments.
-  const auto current = current_.load();
-  const auto previous = previous_.load();
-
-  if (current == previous) {
+  std::lock_guard<std::mutex> lock(mutex_);
+  if (current_ == previous_) {
     return 0;
   }
 
-  previous_ = current;
-
-  return current - previous;
+  const auto value = current_ - previous_;
+  previous_ = current_;
+  return value;
 }
 
 }  // namespace tally
