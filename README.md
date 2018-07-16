@@ -43,8 +43,10 @@ int main(int argc, char** argv) {
           .Build();
 
   // Create a scope which serves as a registry for your metrics.
-  auto scope = tally::ScopeBuilder().reporter(reporter).ReportEvery(
-      std::chrono::seconds(1));
+  auto scope = tally::ScopeBuilder()
+                      .reporter(reporter)
+                      .reporting_interval(std::chrono::seconds(1))
+                      .Build();
 
   // Create your metrics.
   auto counter = scope->Counter("my_counter");

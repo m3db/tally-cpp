@@ -43,17 +43,16 @@ class ScopeBuilder {
 
   ScopeBuilder &tags(const std::unordered_map<std::string, std::string> &tags);
 
-  // ReportEvery constructs a scope and begins reporting metrics every
-  // `interval` seconds.
-  std::unique_ptr<Scope> ReportEvery(std::chrono::seconds interval);
+  ScopeBuilder &reporting_interval(std::chrono::seconds interval);
 
-  // Build constructs a Scope but does not start reporting metrics. Clients
-  // should use ReportEvery instead of Build.
+  // Build constructs a Scope and begins reporting metrics if the scope's
+  // reporting interval is non-zero.
   std::unique_ptr<Scope> Build();
 
  private:
   std::string prefix_;
   std::string separator_;
+  std::chrono::seconds reporting_interval_;
   std::unordered_map<std::string, std::string> tags_;
   std::shared_ptr<StatsReporter> reporter_;
 };

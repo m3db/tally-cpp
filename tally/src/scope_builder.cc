@@ -27,6 +27,7 @@ namespace tally {
 namespace {
 const std::string DEFAULT_PREFIX = "";
 const std::string DEFAULT_SEPARATOR = ".";
+const std::chrono::seconds DEFAULT_REPORTING_INTERVAL = std::chrono::seconds(0);
 const std::unordered_map<std::string, std::string> DEFAULT_TAGS = {};
 const std::shared_ptr<StatsReporter> DEFAULT_REPORTER =
     NoopStatsReporter::New();
@@ -35,6 +36,7 @@ const std::shared_ptr<StatsReporter> DEFAULT_REPORTER =
 ScopeBuilder::ScopeBuilder()
     : prefix_(DEFAULT_PREFIX),
       separator_(DEFAULT_SEPARATOR),
+      reporting_interval_(DEFAULT_REPORTING_INTERVAL),
       tags_(DEFAULT_TAGS),
       reporter_(DEFAULT_REPORTER) {}
 
@@ -59,14 +61,15 @@ ScopeBuilder &ScopeBuilder::tags(
   return *this;
 }
 
-std::unique_ptr<Scope> ScopeBuilder::Build() {
-  return ReportEvery(std::chrono::seconds(0));
+ScopeBuilder &ScopeBuilder::reporting_interval(std::chrono::seconds interval) {
+  reporting_interval_ = interval;
+  return *this;
 }
 
-std::unique_ptr<Scope> ScopeBuilder::ReportEvery(
-    std::chrono::seconds interval) {
-  return std::unique_ptr<Scope>{new ScopeImpl(
-      this->prefix_, this->separator_, this->tags_, interval, this->reporter_)};
+std::unique_ptr<Scope> ScopeBuilder::Build() {
+  return std::unique_ptr<Scope>{
+      new ScopeImpl(this->prefix_, this->separator_, this->tags_,
+                    this->reporting_interval_, this->reporter_)};
 }
 
 }  // namespace tally

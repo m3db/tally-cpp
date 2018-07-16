@@ -99,7 +99,7 @@ TEST(ScopeImplTest, NoReporterCapabilities) {
   EXPECT_EQ(false, capabilities->Tagging());
 }
 
-TEST(ScopeImplTest, ReportEvery) {
+TEST(ScopeImplTest, Reporting) {
   std::string prefix("foo");
   std::string subscope_name("bar");
   std::string name("baz");
@@ -130,7 +130,8 @@ TEST(ScopeImplTest, ReportEvery) {
                    .prefix(prefix)
                    .tags(scope_tags)
                    .reporter(reporter)
-                   .ReportEvery(std::chrono::seconds(1));
+                   .reporting_interval(std::chrono::seconds(1))
+                   .Build();
   auto subscope = scope->SubScope(subscope_name)->Tagged(subscope_tags);
 
   auto counter = subscope->Counter(name);
