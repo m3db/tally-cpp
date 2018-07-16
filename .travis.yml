@@ -63,10 +63,6 @@ matrix:
   - os: linux
     env:
       - TEST="Thread Sanitizer"
-    addons:
-      apt:
-        packages:
-        - libubsan
     script:
       - export CXX="clang++"
       - export CC="clang"
@@ -74,6 +70,17 @@ matrix:
       - bazel version
       - bazel build //... --config tsan
       - bazel test --test_output=all --test_timeout=60 //... --config tsan
+  # Memory Sanitizer
+  - os: linux
+    env:
+      - TEST="Memory Sanitizer"
+    script:
+      - export CXX="clang++"
+      - export CC="clang"
+      - clang --version
+      - bazel version
+      - bazel build //... --config msan
+      - bazel test --test_output=all --test_timeout=60 //... --config msan
   # Undefined Behavior Sanitizer
   - os: linux
     env:

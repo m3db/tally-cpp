@@ -29,4 +29,13 @@ build:ubsan --copt -O0
 build:ubsan --copt -fno-omit-frame-pointer
 build:ubsan --linkopt -fsanitize=undefined
 build:ubsan --cc_output_directory_tag=ubsan
-build:ubsan --linkopt -lubsan
+
+# Memory Sanitizer
+# To use it: bazel build --config msan //...
+build:msan --strip=never
+build:msan --copt -fsanitize=memory
+build:msan --copt -DADDRESS_SANITIZER
+build:msan --copt -O0
+build:msan --copt -fno-omit-frame-pointer
+build:msan --linkopt -fsanitize=memory
+build:msan --cc_output_directory_tag=msan
