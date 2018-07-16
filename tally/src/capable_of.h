@@ -29,9 +29,9 @@ class CapableOf : public Capabilities {
   CapableOf(bool reporting, bool tagging);
 
   // Methods to implement the Capabilities interface.
-  bool Reporting();
+  bool Reporting() const;
 
-  bool Tagging();
+  bool Tagging() const;
 
  private:
   const bool reporting_;

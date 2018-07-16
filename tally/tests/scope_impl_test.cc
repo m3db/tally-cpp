@@ -30,8 +30,8 @@
 
 class MockCapabilites : public tally::Capabilities {
  public:
-  MOCK_METHOD0(Reporting, bool());
-  MOCK_METHOD0(Tagging, bool());
+  MOCK_CONST_METHOD0(Reporting, bool());
+  MOCK_CONST_METHOD0(Tagging, bool());
 };
 
 TEST(ScopeImplTest, GetOrCreateCounter) {

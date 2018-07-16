@@ -28,10 +28,10 @@ class Capabilities {
 
   // Reporting returns a bool indicating whether reporting of metrics is
   // supported.
-  virtual bool Reporting() = 0;
+  virtual bool Reporting() const = 0;
 
   // Tagging returns a bool indicating whether tagged metrics are supported.
-  virtual bool Tagging() = 0;
+  virtual bool Tagging() const = 0;
 };
 
 }  // namespace tally

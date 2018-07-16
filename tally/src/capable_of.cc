@@ -25,8 +25,8 @@ namespace tally {
 CapableOf::CapableOf(bool reporting, bool tagging)
     : reporting_(reporting), tagging_(tagging) {}
 
-bool CapableOf::Reporting() { return reporting_; }
+bool CapableOf::Reporting() const { return reporting_; }
 
-bool CapableOf::Tagging() { return tagging_; }
+bool CapableOf::Tagging() const { return tagging_; }
 
 }  // namespace tally
