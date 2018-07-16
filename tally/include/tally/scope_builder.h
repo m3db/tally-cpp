@@ -20,8 +20,8 @@
 
 #pragma once
 
-#include <unordered_map>
 #include <string>
+#include <unordered_map>
 
 #include "tally/buckets.h"
 #include "tally/scope.h"

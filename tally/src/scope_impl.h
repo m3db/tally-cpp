@@ -21,10 +21,10 @@
 #pragma once
 
 #include <condition_variable>
-#include <unordered_map>
 #include <mutex>
 #include <string>
 #include <thread>
+#include <unordered_map>
 
 #include "tally/scope.h"
 #include "tally/src/counter_impl.h"
@@ -76,8 +76,9 @@ class ScopeImpl : public Scope {
   std::string FullyQualifiedName(const std::string &name);
 
   // ScopeID constructs a unique ID for a scope.
-  static std::string ScopeID(const std::string &prefix,
-                             const std::unordered_map<std::string, std::string> &tags);
+  static std::string ScopeID(
+      const std::string &prefix,
+      const std::unordered_map<std::string, std::string> &tags);
 
   // Run is the function used to report metrics from the Scope.
   void Run();

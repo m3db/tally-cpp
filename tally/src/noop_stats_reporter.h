@@ -20,8 +20,8 @@
 
 #pragma once
 
-#include <unordered_map>
 #include <string>
+#include <unordered_map>
 
 #include "tally/stats_reporter.h"
 
@@ -49,12 +49,14 @@ class NoopStatsReporter : public StatsReporter {
                    std::chrono::nanoseconds value);
 
   void ReportHistogramValueSamples(
-      const std::string &name, const std::unordered_map<std::string, std::string> &tags,
+      const std::string &name,
+      const std::unordered_map<std::string, std::string> &tags,
       uint64_t bucket_id, uint64_t num_buckets, double buckets_lower_bound,
       double buckets_upper_bound, uint64_t samples);
 
   void ReportHistogramDurationSamples(
-      const std::string &name, const std::unordered_map<std::string, std::string> &tags,
+      const std::string &name,
+      const std::unordered_map<std::string, std::string> &tags,
       uint64_t bucket_id, uint64_t num_buckets,
       std::chrono::nanoseconds buckets_lower_bound,
       std::chrono::nanoseconds buckets_upper_bound, uint64_t samples);

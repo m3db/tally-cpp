@@ -35,24 +35,27 @@ std::unique_ptr<tally::Capabilities> NoopStatsReporter::Capabilities() {
 void NoopStatsReporter::Flush() {}
 
 void NoopStatsReporter::ReportCounter(
-    const std::string &name, const std::unordered_map<std::string, std::string> &tags,
-    int64_t value) {}
+    const std::string &name,
+    const std::unordered_map<std::string, std::string> &tags, int64_t value) {}
 
 void NoopStatsReporter::ReportGauge(
-    const std::string &name, const std::unordered_map<std::string, std::string> &tags,
-    double value) {}
+    const std::string &name,
+    const std::unordered_map<std::string, std::string> &tags, double value) {}
 
 void NoopStatsReporter::ReportTimer(
-    const std::string &name, const std::unordered_map<std::string, std::string> &tags,
+    const std::string &name,
+    const std::unordered_map<std::string, std::string> &tags,
     std::chrono::nanoseconds value) {}
 
 void NoopStatsReporter::ReportHistogramValueSamples(
-    const std::string &name, const std::unordered_map<std::string, std::string> &tags,
+    const std::string &name,
+    const std::unordered_map<std::string, std::string> &tags,
     uint64_t bucket_id, uint64_t num_buckets, double buckets_lower_bound,
     double buckets_upper_bound, uint64_t samples) {}
 
 void NoopStatsReporter::ReportHistogramDurationSamples(
-    const std::string &name, const std::unordered_map<std::string, std::string> &tags,
+    const std::string &name,
+    const std::unordered_map<std::string, std::string> &tags,
     uint64_t bucket_id, uint64_t num_buckets,
     std::chrono::nanoseconds buckets_lower_bound,
     std::chrono::nanoseconds buckets_upper_bound, uint64_t samples) {}

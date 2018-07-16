@@ -20,8 +20,8 @@
 
 #pragma once
 
-#include <unordered_map>
 #include <string>
+#include <unordered_map>
 
 #include "gmock/gmock.h"
 
@@ -47,13 +47,15 @@ class MockStatsReporter : public tally::StatsReporter {
                     const std::unordered_map<std::string, std::string> &tags,
                     int64_t value));
 
-  MOCK_METHOD3(ReportGauge, void(const std::string &name,
-                                 const std::unordered_map<std::string, std::string> &tags,
-                                 double value));
+  MOCK_METHOD3(ReportGauge,
+               void(const std::string &name,
+                    const std::unordered_map<std::string, std::string> &tags,
+                    double value));
 
-  MOCK_METHOD3(ReportTimer, void(const std::string &name,
-                                 const std::unordered_map<std::string, std::string> &tags,
-                                 std::chrono::nanoseconds value));
+  MOCK_METHOD3(ReportTimer,
+               void(const std::string &name,
+                    const std::unordered_map<std::string, std::string> &tags,
+                    std::chrono::nanoseconds value));
 
   MOCK_METHOD7(ReportHistogramValueSamples,
                void(const std::string &name,

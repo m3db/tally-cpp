@@ -21,8 +21,8 @@
 #pragma once
 
 #include <atomic>
-#include <unordered_map>
 #include <string>
+#include <unordered_map>
 
 #include "tally/counter.h"
 #include "tally/stats_reporter.h"

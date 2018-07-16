@@ -107,7 +107,8 @@ TEST(ScopeImplTest, ReportEvery) {
   std::unordered_map<std::string, std::string> subscope_tags({{"b", "2"}});
 
   std::string expected_name = "foo.bar.baz";
-  std::unordered_map<std::string, std::string> expected_tags = {{"a", "1"}, {"b", "2"}};
+  std::unordered_map<std::string, std::string> expected_tags = {{"a", "1"},
+                                                                {"b", "2"}};
   auto buckets = tally::Buckets::LinearValues(0.0, 1.0, 10);
 
   auto reporter = std::make_shared<MockStatsReporter>();

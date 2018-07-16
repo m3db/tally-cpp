@@ -28,7 +28,8 @@ TimerImpl::TimerImpl(const std::string &name,
     : name_(name), tags_(tags), reporter_(reporter) {}
 
 std::shared_ptr<TimerImpl> TimerImpl::New(
-    const std::string &name, const std::unordered_map<std::string, std::string> &tags,
+    const std::string &name,
+    const std::unordered_map<std::string, std::string> &tags,
     std::shared_ptr<StatsReporter> reporter) {
   return std::shared_ptr<TimerImpl>(new TimerImpl(name, tags, reporter));
 }
