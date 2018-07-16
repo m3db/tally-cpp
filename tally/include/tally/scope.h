@@ -20,7 +20,7 @@
 
 #pragma once
 
-#include <map>
+#include <unordered_map>
 #include <string>
 
 #include "tally/buckets.h"
@@ -57,7 +57,7 @@ class Scope {
   // the tags of the parent and those provided. The provided tags take
   // precedence over the parent's tags.
   virtual std::shared_ptr<Scope> Tagged(
-      const std::map<std::string, std::string> &tags) = 0;
+      const std::unordered_map<std::string, std::string> &tags) = 0;
 
   // Capabilities returns the Capabilities of the Scope.
   virtual std::unique_ptr<tally::Capabilities> Capabilities() = 0;

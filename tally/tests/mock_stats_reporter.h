@@ -20,7 +20,7 @@
 
 #pragma once
 
-#include <map>
+#include <unordered_map>
 #include <string>
 
 #include "gmock/gmock.h"
@@ -44,27 +44,27 @@ class MockStatsReporter : public tally::StatsReporter {
 
   MOCK_METHOD3(ReportCounter,
                void(const std::string &name,
-                    const std::map<std::string, std::string> &tags,
+                    const std::unordered_map<std::string, std::string> &tags,
                     int64_t value));
 
   MOCK_METHOD3(ReportGauge, void(const std::string &name,
-                                 const std::map<std::string, std::string> &tags,
+                                 const std::unordered_map<std::string, std::string> &tags,
                                  double value));
 
   MOCK_METHOD3(ReportTimer, void(const std::string &name,
-                                 const std::map<std::string, std::string> &tags,
+                                 const std::unordered_map<std::string, std::string> &tags,
                                  std::chrono::nanoseconds value));
 
   MOCK_METHOD7(ReportHistogramValueSamples,
                void(const std::string &name,
-                    const std::map<std::string, std::string> &tags,
+                    const std::unordered_map<std::string, std::string> &tags,
                     uint64_t bucket_id, uint64_t num_buckets,
                     double buckets_lower_bound, double buckets_upper_bound,
                     uint64_t samples));
 
   MOCK_METHOD7(ReportHistogramDurationSamples,
                void(const std::string &name,
-                    const std::map<std::string, std::string> &tags,
+                    const std::unordered_map<std::string, std::string> &tags,
                     uint64_t bucket_id, uint64_t num_buckets,
                     std::chrono::nanoseconds buckets_lower_bound,
                     std::chrono::nanoseconds buckets_upper_bound,

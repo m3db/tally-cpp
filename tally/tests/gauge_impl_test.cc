@@ -25,7 +25,7 @@
 
 TEST(GaugeImplTest, UpdateOnce) {
   std::string name("foo");
-  std::map<std::string, std::string> tags({});
+  std::unordered_map<std::string, std::string> tags({});
   auto reporter = std::make_shared<MockStatsReporter>();
 
   EXPECT_CALL(*reporter.get(), ReportGauge(name, tags, 1.5)).Times(1);
@@ -37,7 +37,7 @@ TEST(GaugeImplTest, UpdateOnce) {
 
 TEST(GaugeImplTest, UpdateMultipleTimes) {
   std::string name("foo");
-  std::map<std::string, std::string> tags({});
+  std::unordered_map<std::string, std::string> tags({});
   auto reporter = std::make_shared<MockStatsReporter>();
 
   EXPECT_CALL(*reporter.get(), ReportGauge(name, tags, 2.25)).Times(1);
@@ -50,7 +50,7 @@ TEST(GaugeImplTest, UpdateMultipleTimes) {
 
 TEST(GaugeImplTest, ValueIsReset) {
   std::string name("foo");
-  std::map<std::string, std::string> tags({});
+  std::unordered_map<std::string, std::string> tags({});
   auto reporter = std::make_shared<MockStatsReporter>();
   EXPECT_CALL(*reporter.get(), ReportGauge(name, tags, 1.5)).Times(1);
   EXPECT_CALL(*reporter.get(), ReportGauge(name, tags, 2.25)).Times(1);

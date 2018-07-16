@@ -20,7 +20,7 @@
 
 #include "tally/src/histogram_bucket.h"
 
-#include <map>
+#include <unordered_map>
 #include <string>
 #include <vector>
 
@@ -39,7 +39,7 @@ HistogramBucket::HistogramBucket(Buckets::Kind kind, uint64_t bucket_id,
 void HistogramBucket::Record() { samples_->Inc(1); }
 
 void HistogramBucket::Report(const std::string &name,
-                             const std::map<std::string, std::string> &tags,
+                             const std::unordered_map<std::string, std::string> &tags,
                              StatsReporter *reporter) {
   auto samples = samples_->Value();
   if (samples != 0 && reporter != nullptr) {

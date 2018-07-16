@@ -21,7 +21,7 @@
 #include <chrono>
 #include <cstdint>
 #include <iostream>
-#include <map>
+#include <unordered_map>
 #include <memory>
 #include <mutex>
 #include <set>
@@ -67,7 +67,7 @@ class ReporterTest : public ::testing::Test {
 
 TEST_F(ReporterTest, ReportCounter) {
   std::string name("foo");
-  std::map<std::string, std::string> tags({{"a", "1"}});
+  std::unordered_map<std::string, std::string> tags({{"a", "1"}});
   int64_t value = 1;
 
   std::set<tally::m3::thrift::MetricTag> expected_tags;
@@ -100,7 +100,7 @@ TEST_F(ReporterTest, ReportCounter) {
 
 TEST_F(ReporterTest, ReportGauge) {
   std::string name("foo");
-  std::map<std::string, std::string> tags({{"a", "1"}});
+  std::unordered_map<std::string, std::string> tags({{"a", "1"}});
   double value = 1.0;
 
   std::set<tally::m3::thrift::MetricTag> expected_tags;
@@ -134,7 +134,7 @@ TEST_F(ReporterTest, ReportGauge) {
 
 TEST_F(ReporterTest, ReportTimer) {
   std::string name("foo");
-  std::map<std::string, std::string> tags({{"a", "1"}});
+  std::unordered_map<std::string, std::string> tags({{"a", "1"}});
   std::chrono::nanoseconds value(1);
 
   std::set<tally::m3::thrift::MetricTag> expected_tags;
@@ -168,7 +168,7 @@ TEST_F(ReporterTest, ReportTimer) {
 
 TEST_F(ReporterTest, ReportHistogramValueSamples) {
   std::string name("foo");
-  std::map<std::string, std::string> tags({{"a", "1"}});
+  std::unordered_map<std::string, std::string> tags({{"a", "1"}});
   uint64_t value = 1;
 
   std::set<tally::m3::thrift::MetricTag> expected_tags;
@@ -212,7 +212,7 @@ TEST_F(ReporterTest, ReportHistogramValueSamples) {
 
 TEST_F(ReporterTest, ReportHistogramDurationSamples) {
   std::string name("foo");
-  std::map<std::string, std::string> tags({{"a", "1"}});
+  std::unordered_map<std::string, std::string> tags({{"a", "1"}});
   uint64_t value = 1;
 
   std::set<tally::m3::thrift::MetricTag> expected_tags;

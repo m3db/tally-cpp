@@ -22,7 +22,7 @@ ingestion pipeline. A default implementation for emitting tagged metrics using T
 
 ```c++
 #include <chrono>
-#include <map>
+#include <unordered_map>
 #include <memory>
 #include <string>
 #include <thread>

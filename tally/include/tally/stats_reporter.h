@@ -22,7 +22,7 @@
 
 #include <chrono>
 #include <cstdint>
-#include <map>
+#include <unordered_map>
 #include <memory>
 #include <string>
 
@@ -38,24 +38,24 @@ class StatsReporter : public BaseStatsReporter {
 
   // Methods to report metrics.
   virtual void ReportCounter(const std::string &name,
-                             const std::map<std::string, std::string> &tags,
+                             const std::unordered_map<std::string, std::string> &tags,
                              int64_t value) = 0;
 
   virtual void ReportGauge(const std::string &name,
-                           const std::map<std::string, std::string> &tags,
+                           const std::unordered_map<std::string, std::string> &tags,
                            double value) = 0;
 
   virtual void ReportTimer(const std::string &name,
-                           const std::map<std::string, std::string> &tags,
+                           const std::unordered_map<std::string, std::string> &tags,
                            std::chrono::nanoseconds value) = 0;
 
   virtual void ReportHistogramValueSamples(
-      const std::string &name, const std::map<std::string, std::string> &tags,
+      const std::string &name, const std::unordered_map<std::string, std::string> &tags,
       uint64_t bucket_id, uint64_t num_buckets, double buckets_lower_bound,
       double buckets_upper_bound, uint64_t samples) = 0;
 
   virtual void ReportHistogramDurationSamples(
-      const std::string &name, const std::map<std::string, std::string> &tags,
+      const std::string &name, const std::unordered_map<std::string, std::string> &tags,
       uint64_t bucket_id, uint64_t num_buckets,
       std::chrono::nanoseconds buckets_lower_bound,
       std::chrono::nanoseconds buckets_upper_bound, uint64_t samples) = 0;

@@ -21,7 +21,7 @@
 #include "tally/src/scope_impl.h"
 
 #include <algorithm>
-#include <map>
+#include <unordered_map>
 #include <mutex>
 #include <sstream>
 #include <string>
@@ -36,7 +36,7 @@
 namespace tally {
 
 ScopeImpl::ScopeImpl(const std::string &prefix, const std::string &separator,
-                     const std::map<std::string, std::string> &tags,
+                     const std::unordered_map<std::string, std::string> &tags,
                      std::chrono::seconds interval,
                      std::shared_ptr<StatsReporter> reporter)
     : prefix_(prefix),
@@ -113,7 +113,7 @@ std::shared_ptr<tally::Scope> ScopeImpl::SubScope(const std::string &name) {
 }
 
 std::shared_ptr<tally::Scope> ScopeImpl::Tagged(
-    const std::map<std::string, std::string> &tags) {
+    const std::unordered_map<std::string, std::string> &tags) {
   return SubScope(prefix_, tags);
 }
 
@@ -125,8 +125,8 @@ std::unique_ptr<tally::Capabilities> ScopeImpl::Capabilities() {
 }
 
 std::shared_ptr<tally::Scope> ScopeImpl::SubScope(
-    const std::string &prefix, const std::map<std::string, std::string> &tags) {
-  std::map<std::string, std::string> new_tags;
+    const std::string &prefix, const std::unordered_map<std::string, std::string> &tags) {
+  std::unordered_map<std::string, std::string> new_tags;
 
   // Insert the new tags second as they take priority over the scope's tags.
   for (auto const &tag : tags_) {
@@ -168,7 +168,7 @@ std::string ScopeImpl::FullyQualifiedName(const std::string &name) {
 }
 
 std::string ScopeImpl::ScopeID(const std::string &prefix,
-                               const std::map<std::string, std::string> &tags) {
+                               const std::unordered_map<std::string, std::string> &tags) {
   std::vector<std::string> keys;
   keys.reserve(tags.size());
   for (auto const &tag : tags) {

@@ -20,7 +20,7 @@
 
 #pragma once
 
-#include <map>
+#include <unordered_map>
 #include <string>
 
 #include "tally/buckets.h"
@@ -41,7 +41,7 @@ class ScopeBuilder {
 
   ScopeBuilder &separator(const std::string &separator);
 
-  ScopeBuilder &tags(const std::map<std::string, std::string> &tags);
+  ScopeBuilder &tags(const std::unordered_map<std::string, std::string> &tags);
 
   // ReportEvery constructs a scope and begins reporting metrics every
   // `interval` seconds.
@@ -54,7 +54,7 @@ class ScopeBuilder {
  private:
   std::string prefix_;
   std::string separator_;
-  std::map<std::string, std::string> tags_;
+  std::unordered_map<std::string, std::string> tags_;
   std::shared_ptr<StatsReporter> reporter_;
 };
 

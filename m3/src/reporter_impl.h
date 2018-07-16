@@ -22,7 +22,7 @@
 
 #include <chrono>
 #include <condition_variable>
-#include <map>
+#include <unordered_map>
 #include <memory>
 #include <mutex>
 #include <queue>
@@ -48,7 +48,7 @@ namespace m3 {
 class Reporter::Impl : public tally::StatsReporter {
  public:
   Impl(const std::string &host, uint16_t port,
-       const std::map<std::string, std::string> &common_tags,
+       const std::unordered_map<std::string, std::string> &common_tags,
        uint32_t max_queue_size, uint16_t max_packet_size);
 
   ~Impl();
@@ -64,24 +64,24 @@ class Reporter::Impl : public tally::StatsReporter {
   void Flush();
 
   void ReportCounter(const std::string &name,
-                     const std::map<std::string, std::string> &tags,
+                     const std::unordered_map<std::string, std::string> &tags,
                      int64_t value);
 
   void ReportGauge(const std::string &name,
-                   const std::map<std::string, std::string> &tags,
+                   const std::unordered_map<std::string, std::string> &tags,
                    double value);
 
   void ReportTimer(const std::string &name,
-                   const std::map<std::string, std::string> &tags,
+                   const std::unordered_map<std::string, std::string> &tags,
                    std::chrono::nanoseconds value);
 
   void ReportHistogramValueSamples(
-      const std::string &name, const std::map<std::string, std::string> &tags,
+      const std::string &name, const std::unordered_map<std::string, std::string> &tags,
       uint64_t bucket_id, uint64_t num_buckets, double buckets_lower_bound,
       double buckets_upper_bound, uint64_t samples);
 
   void ReportHistogramDurationSamples(
-      const std::string &name, const std::map<std::string, std::string> &tags,
+      const std::string &name, const std::unordered_map<std::string, std::string> &tags,
       uint64_t bucket_id, uint64_t num_buckets,
       std::chrono::nanoseconds buckets_lower_bound,
       std::chrono::nanoseconds buckets_upper_bound, uint64_t samples);
@@ -110,7 +110,7 @@ class Reporter::Impl : public tally::StatsReporter {
   thrift::MetricValue CreateTimer(std::chrono::nanoseconds value);
 
   std::set<thrift::MetricTag> ConvertTags(
-      const std::map<std::string, std::string> &tags);
+      const std::unordered_map<std::string, std::string> &tags);
 
   std::string ValueBucketString(double bucket_bound);
 

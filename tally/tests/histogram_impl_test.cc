@@ -28,7 +28,7 @@
 
 TEST(HistogramImplTest, RecordValueOnce) {
   std::string name("foo");
-  std::map<std::string, std::string> tags({});
+  std::unordered_map<std::string, std::string> tags({});
   auto buckets = tally::Buckets::LinearValues(0.0, 1.0, 10);
   double value = 1.5;
   std::shared_ptr<MockStatsReporter> reporter(new MockStatsReporter());
@@ -43,7 +43,7 @@ TEST(HistogramImplTest, RecordValueOnce) {
 
 TEST(HistogramImplTest, RecordDurationOnce) {
   std::string name("foo");
-  std::map<std::string, std::string> tags({});
+  std::unordered_map<std::string, std::string> tags({});
   auto buckets = tally::Buckets::ExponentialDurations(
       std::chrono::nanoseconds(1000), 2, 10);
   std::chrono::nanoseconds duration(1500);
@@ -61,7 +61,7 @@ TEST(HistogramImplTest, RecordDurationOnce) {
 
 TEST(HistogramImplTest, RecordValueMultipleTimes) {
   std::string name("foo");
-  std::map<std::string, std::string> tags({});
+  std::unordered_map<std::string, std::string> tags({});
   auto buckets = tally::Buckets::LinearValues(0.0, 1.0, 10);
   double value = 1.5;
   std::shared_ptr<MockStatsReporter> reporter(new MockStatsReporter());
@@ -77,7 +77,7 @@ TEST(HistogramImplTest, RecordValueMultipleTimes) {
 
 TEST(HistogramImplTest, RecordDurationMultipleTimes) {
   std::string name("foo");
-  std::map<std::string, std::string> tags({});
+  std::unordered_map<std::string, std::string> tags({});
   auto buckets = tally::Buckets::ExponentialDurations(
       std::chrono::nanoseconds(1000), 2, 10);
   std::chrono::nanoseconds duration(3000);
@@ -96,7 +96,7 @@ TEST(HistogramImplTest, RecordDurationMultipleTimes) {
 
 TEST(HistogramImplTest, RecordValueMultipleTimesWithMultipleBuckets) {
   std::string name("foo");
-  std::map<std::string, std::string> tags({});
+  std::unordered_map<std::string, std::string> tags({});
   auto buckets = tally::Buckets::LinearValues(0.0, 1.0, 10);
   double first_value = 0.5;
   double second_value = 2.5;
@@ -116,7 +116,7 @@ TEST(HistogramImplTest, RecordValueMultipleTimesWithMultipleBuckets) {
 
 TEST(HistogramImplTest, RecordDurationMultipleTimesWithMultipleBuckets) {
   std::string name("foo");
-  std::map<std::string, std::string> tags({});
+  std::unordered_map<std::string, std::string> tags({});
   auto buckets = tally::Buckets::ExponentialDurations(
       std::chrono::nanoseconds(1000), 2, 10);
   std::chrono::nanoseconds first_duration(3000);
@@ -141,7 +141,7 @@ TEST(HistogramImplTest, RecordDurationMultipleTimesWithMultipleBuckets) {
 
 TEST(HistogramImplTest, Stopwatch) {
   std::string name("foo");
-  std::map<std::string, std::string> tags({});
+  std::unordered_map<std::string, std::string> tags({});
   auto buckets = tally::Buckets::LinearDurations(
       std::chrono::nanoseconds(0), std::chrono::nanoseconds(1000000), 10);
   std::shared_ptr<MockStatsReporter> reporter(new MockStatsReporter());
@@ -159,7 +159,7 @@ TEST(HistogramImplTest, Stopwatch) {
 
 TEST(HistogramImplTest, RecordStopwatch) {
   std::string name("foo");
-  std::map<std::string, std::string> tags({});
+  std::unordered_map<std::string, std::string> tags({});
   auto buckets = tally::Buckets::LinearDurations(
       std::chrono::nanoseconds(0), std::chrono::nanoseconds(1000000), 10);
   std::shared_ptr<MockStatsReporter> reporter(new MockStatsReporter());

@@ -20,7 +20,7 @@
 
 #pragma once
 
-#include <map>
+#include <unordered_map>
 #include <string>
 
 #include "m3/reporter.h"
@@ -39,7 +39,7 @@ class ReporterBuilder {
   ReporterBuilder &port(uint16_t port);
 
   ReporterBuilder &common_tags(
-      const std::map<std::string, std::string> &common_tags);
+      const std::unordered_map<std::string, std::string> &common_tags);
 
   ReporterBuilder &max_queue_size(uint32_t size);
 
@@ -51,7 +51,7 @@ class ReporterBuilder {
  private:
   std::string host_;
   uint16_t port_;
-  std::map<std::string, std::string> common_tags_;
+  std::unordered_map<std::string, std::string> common_tags_;
   uint32_t max_queue_size_;
   uint32_t max_packet_size_;
 };

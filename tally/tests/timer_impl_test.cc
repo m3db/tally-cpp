@@ -27,7 +27,7 @@
 
 TEST(TimerImplTest, RecordOnce) {
   std::string name("foo");
-  std::map<std::string, std::string> tags({});
+  std::unordered_map<std::string, std::string> tags({});
   auto reporter = std::make_shared<MockStatsReporter>();
   std::chrono::nanoseconds duration(1);
 
@@ -39,7 +39,7 @@ TEST(TimerImplTest, RecordOnce) {
 
 TEST(TimerImplTest, RecordMultipleTimes) {
   std::string name("foo");
-  std::map<std::string, std::string> tags({});
+  std::unordered_map<std::string, std::string> tags({});
   auto reporter = std::make_shared<MockStatsReporter>();
   std::chrono::nanoseconds first_duration(1);
   std::chrono::nanoseconds second_duration(2);
@@ -54,7 +54,7 @@ TEST(TimerImplTest, RecordMultipleTimes) {
 
 TEST(TimerImplTest, Stopwatch) {
   std::string name("foo");
-  std::map<std::string, std::string> tags({});
+  std::unordered_map<std::string, std::string> tags({});
   auto reporter = std::make_shared<MockStatsReporter>();
 
   EXPECT_CALL(*reporter, ReportTimer(name, tags, testing::_)).Times(1);
@@ -66,7 +66,7 @@ TEST(TimerImplTest, Stopwatch) {
 
 TEST(TimerImplTest, RecordStopwatch) {
   std::string name("foo");
-  std::map<std::string, std::string> tags({});
+  std::unordered_map<std::string, std::string> tags({});
   auto reporter = std::make_shared<MockStatsReporter>();
 
   EXPECT_CALL(*reporter, ReportTimer(name, tags, testing::_)).Times(1);

@@ -27,7 +27,7 @@ namespace tally {
 namespace {
 const std::string DEFAULT_PREFIX = "";
 const std::string DEFAULT_SEPARATOR = ".";
-const std::map<std::string, std::string> DEFAULT_TAGS = {};
+const std::unordered_map<std::string, std::string> DEFAULT_TAGS = {};
 const std::shared_ptr<StatsReporter> DEFAULT_REPORTER =
     NoopStatsReporter::New();
 }  // namespace
@@ -54,7 +54,7 @@ ScopeBuilder &ScopeBuilder::separator(const std::string &separator) {
 }
 
 ScopeBuilder &ScopeBuilder::tags(
-    const std::map<std::string, std::string> &tags) {
+    const std::unordered_map<std::string, std::string> &tags) {
   tags_ = tags;
   return *this;
 }

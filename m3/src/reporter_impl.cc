@@ -47,7 +47,7 @@ std::string HISTOGRAM_BUCKET_ID_NAME = "bucketid";
 }  // namespace
 
 Reporter::Impl::Impl(const std::string &host, uint16_t port,
-                     const std::map<std::string, std::string> &common_tags,
+                     const std::unordered_map<std::string, std::string> &common_tags,
                      uint32_t max_queue_size, uint16_t max_packet_size)
     : common_tags_(ConvertTags(common_tags)),
       max_queue_size_(max_queue_size),
@@ -86,7 +86,7 @@ std::unique_ptr<tally::Capabilities> Reporter::Impl::Capabilities() {
 }
 
 void Reporter::Impl::ReportCounter(
-    const std::string &name, const std::map<std::string, std::string> &tags,
+    const std::string &name, const std::unordered_map<std::string, std::string> &tags,
     int64_t value) {
   auto counter = CreateCounter(value);
   auto metric_tags = ConvertTags(tags);
@@ -94,7 +94,7 @@ void Reporter::Impl::ReportCounter(
 }
 
 void Reporter::Impl::ReportGauge(const std::string &name,
-                                 const std::map<std::string, std::string> &tags,
+                                 const std::unordered_map<std::string, std::string> &tags,
                                  double value) {
   auto gauge = CreateGauge(value);
   auto metric_tags = ConvertTags(tags);
@@ -102,7 +102,7 @@ void Reporter::Impl::ReportGauge(const std::string &name,
 }
 
 void Reporter::Impl::ReportTimer(const std::string &name,
-                                 const std::map<std::string, std::string> &tags,
+                                 const std::unordered_map<std::string, std::string> &tags,
                                  std::chrono::nanoseconds value) {
   auto timer = CreateTimer(value);
   auto metric_tags = ConvertTags(tags);
@@ -110,7 +110,7 @@ void Reporter::Impl::ReportTimer(const std::string &name,
 }
 
 void Reporter::Impl::ReportHistogramValueSamples(
-    const std::string &name, const std::map<std::string, std::string> &tags,
+    const std::string &name, const std::unordered_map<std::string, std::string> &tags,
     uint64_t bucket_id, uint64_t num_buckets, double buckets_lower_bound,
     double buckets_upper_bound, uint64_t samples) {
   auto counter = CreateCounter(samples);
@@ -137,7 +137,7 @@ void Reporter::Impl::ReportHistogramValueSamples(
 }
 
 void Reporter::Impl::ReportHistogramDurationSamples(
-    const std::string &name, const std::map<std::string, std::string> &tags,
+    const std::string &name, const std::unordered_map<std::string, std::string> &tags,
     uint64_t bucket_id, uint64_t num_buckets,
     std::chrono::nanoseconds buckets_lower_bound,
     std::chrono::nanoseconds buckets_upper_bound, uint64_t samples) {
@@ -206,7 +206,7 @@ thrift::MetricValue Reporter::Impl::CreateTimer(
 }
 
 std::set<thrift::MetricTag> Reporter::Impl::ConvertTags(
-    const std::map<std::string, std::string> &tags) {
+    const std::unordered_map<std::string, std::string> &tags) {
   std::set<thrift::MetricTag> metric_tags;
   for (auto const &entry : tags) {
     thrift::MetricTag tag;

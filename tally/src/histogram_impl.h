@@ -21,7 +21,7 @@
 #pragma once
 
 #include <algorithm>
-#include <map>
+#include <unordered_map>
 #include <string>
 #include <vector>
 
@@ -59,7 +59,7 @@ class HistogramImpl : public Histogram,
 
   // Report reports the current values of the Histogram's buckets.
   void Report(const std::string &name,
-              const std::map<std::string, std::string> &tags,
+              const std::unordered_map<std::string, std::string> &tags,
               StatsReporter *reporter);
 
  private:

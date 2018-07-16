@@ -21,7 +21,7 @@
 #pragma once
 
 #include <atomic>
-#include <map>
+#include <unordered_map>
 #include <string>
 
 #include "tally/gauge.h"
@@ -43,7 +43,7 @@ class GaugeImpl : public Gauge {
 
   // Report reports the current value of the Gauge.
   void Report(const std::string &name,
-              const std::map<std::string, std::string> &tags,
+              const std::unordered_map<std::string, std::string> &tags,
               StatsReporter *reporter);
 
  private:

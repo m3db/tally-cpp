@@ -29,7 +29,7 @@ constexpr uint32_t DEFAULT_MAX_QUEUE_SIZE = 1024;
 constexpr uint16_t DEFAULT_MAX_PACKET_SIZE = 1440;
 constexpr uint16_t DEFAULT_PORT = 9052;
 const std::string DEFAULT_HOST = "127.0.0.1";
-const std::map<std::string, std::string> DEFAULT_COMMON_TAGS = {};
+const std::unordered_map<std::string, std::string> DEFAULT_COMMON_TAGS = {};
 }  // namespace
 
 ReporterBuilder::ReporterBuilder()
@@ -50,7 +50,7 @@ ReporterBuilder &ReporterBuilder::port(uint16_t port) {
 }
 
 ReporterBuilder &ReporterBuilder::common_tags(
-    const std::map<std::string, std::string> &common_tags) {
+    const std::unordered_map<std::string, std::string> &common_tags) {
   common_tags_ = common_tags;
   return *this;
 }

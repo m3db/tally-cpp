@@ -21,7 +21,7 @@
 #pragma once
 
 #include <atomic>
-#include <map>
+#include <unordered_map>
 #include <string>
 
 #include "tally/counter.h"
@@ -45,7 +45,7 @@ class CounterImpl : public Counter {
 
   // Report reports the current value of the counter.
   void Report(const std::string &name,
-              const std::map<std::string, std::string> &tags,
+              const std::unordered_map<std::string, std::string> &tags,
               StatsReporter *reporter);
 
   // Value returns the current value of the counter.

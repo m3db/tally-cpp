@@ -32,7 +32,7 @@ void GaugeImpl::Update(double value) {
 }
 
 void GaugeImpl::Report(const std::string &name,
-                       const std::map<std::string, std::string> &tags,
+                       const std::unordered_map<std::string, std::string> &tags,
                        StatsReporter *reporter) {
   bool expected = true;
   if (updated_.compare_exchange_strong(expected, false) &&

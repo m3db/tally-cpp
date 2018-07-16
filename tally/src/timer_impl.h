@@ -20,7 +20,7 @@
 
 #pragma once
 
-#include <map>
+#include <unordered_map>
 #include <string>
 
 #include "tally/stats_reporter.h"
@@ -37,7 +37,7 @@ class TimerImpl : public Timer,
   // returned a shared pointer to a TimerImpl object since the class
   // inherits from the std::enable_shared_from_this class.
   static std::shared_ptr<TimerImpl> New(
-      const std::string &name, const std::map<std::string, std::string> &tags,
+      const std::string &name, const std::unordered_map<std::string, std::string> &tags,
       std::shared_ptr<StatsReporter> reporter);
 
   // Ensure the class is non-copyable.
@@ -57,11 +57,11 @@ class TimerImpl : public Timer,
 
  private:
   TimerImpl(const std::string &name,
-            const std::map<std::string, std::string> &tags,
+            const std::unordered_map<std::string, std::string> &tags,
             std::shared_ptr<StatsReporter> reporter);
 
   const std::string name_;
-  const std::map<std::string, std::string> tags_;
+  const std::unordered_map<std::string, std::string> tags_;
   std::shared_ptr<StatsReporter> reporter_;
 };
 

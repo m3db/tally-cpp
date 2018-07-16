@@ -21,7 +21,7 @@
 #pragma once
 
 #include <chrono>
-#include <map>
+#include <unordered_map>
 #include <memory>
 #include <string>
 
@@ -48,31 +48,31 @@ class Reporter : public tally::StatsReporter {
   void Flush() override;
 
   void ReportCounter(const std::string &name,
-                     const std::map<std::string, std::string> &tags,
+                     const std::unordered_map<std::string, std::string> &tags,
                      int64_t value) override;
 
   void ReportGauge(const std::string &name,
-                   const std::map<std::string, std::string> &tags,
+                   const std::unordered_map<std::string, std::string> &tags,
                    double value) override;
 
   void ReportTimer(const std::string &name,
-                   const std::map<std::string, std::string> &tags,
+                   const std::unordered_map<std::string, std::string> &tags,
                    std::chrono::nanoseconds value) override;
 
   void ReportHistogramValueSamples(
-      const std::string &name, const std::map<std::string, std::string> &tags,
+      const std::string &name, const std::unordered_map<std::string, std::string> &tags,
       uint64_t bucket_id, uint64_t num_buckets, double buckets_lower_bound,
       double buckets_upper_bound, uint64_t samples) override;
 
   void ReportHistogramDurationSamples(
-      const std::string &name, const std::map<std::string, std::string> &tags,
+      const std::string &name, const std::unordered_map<std::string, std::string> &tags,
       uint64_t bucket_id, uint64_t num_buckets,
       std::chrono::nanoseconds buckets_lower_bound,
       std::chrono::nanoseconds buckets_upper_bound, uint64_t samples) override;
 
  private:
   Reporter(const std::string &host, uint16_t port,
-           const std::map<std::string, std::string> &common_tags,
+           const std::unordered_map<std::string, std::string> &common_tags,
            uint32_t max_queue_size, uint16_t max_packet_size);
 
   class Impl;

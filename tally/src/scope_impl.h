@@ -21,7 +21,7 @@
 #pragma once
 
 #include <condition_variable>
-#include <map>
+#include <unordered_map>
 #include <mutex>
 #include <string>
 #include <thread>
@@ -38,7 +38,7 @@ namespace tally {
 class ScopeImpl : public Scope {
  public:
   ScopeImpl(const std::string &prefix, const std::string &separator,
-            const std::map<std::string, std::string> &tags,
+            const std::unordered_map<std::string, std::string> &tags,
             std::chrono::seconds interval,
             std::shared_ptr<StatsReporter> reporter);
 
@@ -62,7 +62,7 @@ class ScopeImpl : public Scope {
   std::shared_ptr<tally::Scope> SubScope(const std::string &name);
 
   std::shared_ptr<tally::Scope> Tagged(
-      const std::map<std::string, std::string> &tags);
+      const std::unordered_map<std::string, std::string> &tags);
 
   std::unique_ptr<tally::Capabilities> Capabilities();
 
@@ -70,14 +70,14 @@ class ScopeImpl : public Scope {
   // SubScope constructs a subscope with the provided prefix and tags.
   std::shared_ptr<tally::Scope> SubScope(
       const std::string &prefix,
-      const std::map<std::string, std::string> &tags);
+      const std::unordered_map<std::string, std::string> &tags);
 
   // FullyQualifiedName returns the fully qualified name of the provided name.
   std::string FullyQualifiedName(const std::string &name);
 
   // ScopeID constructs a unique ID for a scope.
   static std::string ScopeID(const std::string &prefix,
-                             const std::map<std::string, std::string> &tags);
+                             const std::unordered_map<std::string, std::string> &tags);
 
   // Run is the function used to report metrics from the Scope.
   void Run();
@@ -87,7 +87,7 @@ class ScopeImpl : public Scope {
 
   const std::string prefix_;
   const std::string separator_;
-  const std::map<std::string, std::string> tags_;
+  const std::unordered_map<std::string, std::string> tags_;
   const std::chrono::nanoseconds interval_;
   std::shared_ptr<StatsReporter> reporter_;
 
@@ -97,19 +97,19 @@ class ScopeImpl : public Scope {
   bool running_;
 
   std::mutex registry_mutex_;
-  std::map<std::string, std::shared_ptr<ScopeImpl>> registry_;
+  std::unordered_map<std::string, std::shared_ptr<ScopeImpl>> registry_;
 
   std::mutex counters_mutex_;
-  std::map<std::string, std::shared_ptr<CounterImpl>> counters_;
+  std::unordered_map<std::string, std::shared_ptr<CounterImpl>> counters_;
 
   std::mutex gauges_mutex_;
-  std::map<std::string, std::shared_ptr<GaugeImpl>> gauges_;
+  std::unordered_map<std::string, std::shared_ptr<GaugeImpl>> gauges_;
 
   std::mutex timers_mutex_;
-  std::map<std::string, std::shared_ptr<TimerImpl>> timers_;
+  std::unordered_map<std::string, std::shared_ptr<TimerImpl>> timers_;
 
   std::mutex histograms_mutex_;
-  std::map<std::string, std::shared_ptr<HistogramImpl>> histograms_;
+  std::unordered_map<std::string, std::shared_ptr<HistogramImpl>> histograms_;
 };
 
 }  // namespace tally

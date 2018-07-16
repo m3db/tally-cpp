@@ -25,7 +25,7 @@
 
 TEST(CounterImplTest, IncrementOnce) {
   std::string name("foo");
-  std::map<std::string, std::string> tags({});
+  std::unordered_map<std::string, std::string> tags({});
   auto reporter = std::make_shared<MockStatsReporter>();
 
   EXPECT_CALL(*reporter.get(), ReportCounter(name, tags, 1)).Times(1);
@@ -37,7 +37,7 @@ TEST(CounterImplTest, IncrementOnce) {
 
 TEST(CounterImplTest, IncrementMultipleTimes) {
   std::string name("foo");
-  std::map<std::string, std::string> tags({});
+  std::unordered_map<std::string, std::string> tags({});
   auto reporter = std::make_shared<MockStatsReporter>();
 
   EXPECT_CALL(*reporter.get(), ReportCounter(name, tags, 3)).Times(1);
@@ -50,7 +50,7 @@ TEST(CounterImplTest, IncrementMultipleTimes) {
 
 TEST(CounterImplTest, ValueIsReset) {
   std::string name("foo");
-  std::map<std::string, std::string> tags({});
+  std::unordered_map<std::string, std::string> tags({});
   auto reporter = std::make_shared<MockStatsReporter>();
 
   EXPECT_CALL(*reporter.get(), ReportCounter(name, tags, 1)).Times(1);

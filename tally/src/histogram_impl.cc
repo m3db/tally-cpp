@@ -21,7 +21,7 @@
 #include "tally/src/histogram_impl.h"
 
 #include <limits>
-#include <map>
+#include <unordered_map>
 #include <string>
 #include <vector>
 
@@ -88,7 +88,7 @@ void HistogramImpl::RecordStopwatch(
 }
 
 void HistogramImpl::Report(const std::string &name,
-                           const std::map<std::string, std::string> &tags,
+                           const std::unordered_map<std::string, std::string> &tags,
                            StatsReporter *reporter) {
   for (auto &bucket : buckets_) {
     bucket.Report(name, tags, reporter);

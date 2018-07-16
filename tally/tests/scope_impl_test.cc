@@ -103,11 +103,11 @@ TEST(ScopeImplTest, ReportEvery) {
   std::string prefix("foo");
   std::string subscope_name("bar");
   std::string name("baz");
-  std::map<std::string, std::string> scope_tags({{"a", "1"}});
-  std::map<std::string, std::string> subscope_tags({{"b", "2"}});
+  std::unordered_map<std::string, std::string> scope_tags({{"a", "1"}});
+  std::unordered_map<std::string, std::string> subscope_tags({{"b", "2"}});
 
   std::string expected_name = "foo.bar.baz";
-  std::map<std::string, std::string> expected_tags = {{"a", "1"}, {"b", "2"}};
+  std::unordered_map<std::string, std::string> expected_tags = {{"a", "1"}, {"b", "2"}};
   auto buckets = tally::Buckets::LinearValues(0.0, 1.0, 10);
 
   auto reporter = std::make_shared<MockStatsReporter>();
