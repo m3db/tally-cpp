@@ -120,9 +120,6 @@ class Reporter::Impl : public tally::StatsReporter {
 
   std::string FormatDuration(std::chrono::nanoseconds duration, int precision);
 
-  static const char HISTOGRAM_BUCKET_NAME[];
-  static const char HISTOGRAM_BUCKET_ID_NAME[];
-
   const std::set<thrift::MetricTag> common_tags_;
   const uint32_t max_queue_size_;
   const uint16_t max_packet_size_;

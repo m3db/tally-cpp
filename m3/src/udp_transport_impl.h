@@ -70,9 +70,6 @@ class TUDPTransport::Impl : public apache::thrift::transport::TTransport {
 
   void write_async();
 
-  // Maximum size of UDP packet.
-  static const uint16_t MAX_UDP_PACKET_SIZE = 65000;
-
   const std::string host_;
   const uint16_t port_;
   const TUDPTransport::Kind kind_;

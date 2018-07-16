@@ -41,8 +41,10 @@ namespace tally {
 
 namespace m3 {
 
-const char Reporter::Impl::HISTOGRAM_BUCKET_NAME[] = "bucket";
-const char Reporter::Impl::HISTOGRAM_BUCKET_ID_NAME[] = "bucketid";
+namespace {
+std::string HISTOGRAM_BUCKET_NAME = "bucket";
+std::string HISTOGRAM_BUCKET_ID_NAME = "bucketid";
+}  // namespace
 
 Reporter::Impl::Impl(const std::string &host, uint16_t port,
                      const std::map<std::string, std::string> &common_tags,
@@ -331,6 +333,8 @@ std::string Reporter::Impl::FormatDuration(std::chrono::nanoseconds duration,
 }
 
 void Reporter::Impl::Run() {
+  // The lifetime of calc_transport is this Run method which is single threaded so we don't
+  // need to protect it with a mutex.
   std::shared_ptr<TCalcTransport> calc_transport(new TCalcTransport());
 
   std::unique_lock<std::mutex> run_lock(run_mutex_);

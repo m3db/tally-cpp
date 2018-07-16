@@ -24,11 +24,13 @@
 
 namespace tally {
 
-const char ScopeBuilder::DEFAULT_PREFIX[] = "";
-const char ScopeBuilder::DEFAULT_SEPARATOR[] = ".";
-const std::map<std::string, std::string> ScopeBuilder::DEFAULT_TAGS = {};
-const std::shared_ptr<StatsReporter> ScopeBuilder::DEFAULT_REPORTER =
+namespace {
+const std::string DEFAULT_PREFIX = "";
+const std::string DEFAULT_SEPARATOR = ".";
+const std::map<std::string, std::string> DEFAULT_TAGS = {};
+const std::shared_ptr<StatsReporter> DEFAULT_REPORTER =
     NoopStatsReporter::New();
+}  // namespace
 
 ScopeBuilder::ScopeBuilder()
     : prefix_(DEFAULT_PREFIX),

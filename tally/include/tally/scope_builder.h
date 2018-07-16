@@ -23,9 +23,9 @@
 #include <map>
 #include <string>
 
-#include "tally/src/noop_stats_reporter.h"
 #include "tally/buckets.h"
 #include "tally/scope.h"
+#include "tally/src/noop_stats_reporter.h"
 #include "tally/stats_reporter.h"
 
 namespace tally {
@@ -52,11 +52,6 @@ class ScopeBuilder {
   std::unique_ptr<Scope> Build();
 
  private:
-  static const char DEFAULT_PREFIX[];
-  static const char DEFAULT_SEPARATOR[];
-  static const std::map<std::string, std::string> DEFAULT_TAGS;
-  static const std::shared_ptr<StatsReporter> DEFAULT_REPORTER;
-
   std::string prefix_;
   std::string separator_;
   std::map<std::string, std::string> tags_;

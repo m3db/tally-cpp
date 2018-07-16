@@ -36,6 +36,11 @@ namespace tally {
 
 namespace m3 {
 
+namespace {
+// Maximum size of UDP packet.
+constexpr uint16_t MAX_UDP_PACKET_SIZE = 65000;
+}  // namespace
+
 TUDPTransport::Impl::Impl(const std::string &host, uint16_t port,
                           TUDPTransport::Kind kind, uint16_t max_packet_size)
     : host_(host), port_(port), kind_(kind), open_(false), in_progress_(false) {
