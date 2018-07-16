@@ -28,7 +28,8 @@ namespace {
 const std::string DEFAULT_PREFIX = "";
 const std::string DEFAULT_SEPARATOR = ".";
 const std::chrono::seconds DEFAULT_REPORTING_INTERVAL = std::chrono::seconds(0);
-const std::unordered_map<std::string, std::string> DEFAULT_TAGS = {};
+const std::unordered_map<std::string, std::string> DEFAULT_TAGS =
+    std::unordered_map<std::string, std::string>{};
 const std::shared_ptr<StatsReporter> DEFAULT_REPORTER =
     NoopStatsReporter::New();
 }  // namespace

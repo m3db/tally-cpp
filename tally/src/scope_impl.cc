@@ -109,8 +109,8 @@ std::shared_ptr<tally::Histogram> ScopeImpl::Histogram(const std::string &name,
 }
 
 std::shared_ptr<tally::Scope> ScopeImpl::SubScope(const std::string &name) {
-  std::unordered_map<std::string, std::string> empty_tags = {};
-  return SubScope(FullyQualifiedName(name), empty_tags);
+  return SubScope(FullyQualifiedName(name),
+                  std::unordered_map<std::string, std::string>{});
 }
 
 std::shared_ptr<tally::Scope> ScopeImpl::Tagged(
