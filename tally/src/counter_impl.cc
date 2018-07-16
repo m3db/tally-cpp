@@ -42,9 +42,12 @@ void CounterImpl::Report(
 }
 
 int64_t CounterImpl::Value() {
+  std::lock_guard<std::mutex> lock(mutex_);
+
+  // Load the value of current_ while we hold the lock to ensure an older value
+  // can never overwite a newer one.
   const auto current = current_.load();
 
-  std::lock_guard<std::mutex> lock(mutex_);
   const auto previous = previous_;
   previous_ = current;
 
