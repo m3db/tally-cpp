@@ -20,54 +20,35 @@
 
 #pragma once
 
-#include <algorithm>
 #include <map>
 #include <string>
 #include <vector>
 
 #include "tally/buckets.h"
-#include "tally/counter.h"
-#include "tally/histogram.h"
 #include "tally/src/counter_impl.h"
-#include "tally/src/histogram_bucket.h"
-#include "tally/stats_reporter.h"
 
 namespace tally {
-class HistogramImpl : public Histogram,
-                      public StopwatchRecorder,
-                      public std::enable_shared_from_this<StopwatchRecorder> {
+
+class HistogramBucket {
  public:
-  // New is used in place of the default constructor to ensure that callers are
-  // returned a shared pointer to a HistogramImpl object since the class
-  // inherits from the std::enable_shared_from_this class.
-  static std::shared_ptr<HistogramImpl> New(const Buckets &buckets);
+  HistogramBucket(Buckets::Kind kind, uint64_t bucket_id, uint64_t num_buckets,
+                  double lower_bound, double upper_bound);
 
-  // Ensure the class is non-copyable.
-  HistogramImpl(const HistogramImpl &) = delete;
-
-  HistogramImpl &operator=(const HistogramImpl &) = delete;
-
-  // Methods to implement the Histogram interface.
-  void Record(double);
-
-  void Record(std::chrono::nanoseconds);
-
-  Stopwatch Start();
-
-  // Methods to implement the StopwatchRecorder interface.
-  void RecordStopwatch(std::chrono::steady_clock::time_point);
-
-  // Report reports the current values of the Histogram's buckets.
+  void Record();
   void Report(const std::string &name,
               const std::map<std::string, std::string> &tags,
               StatsReporter *reporter);
 
+  double lower_bound() const;
+  double upper_bound() const;
+
  private:
-  explicit HistogramImpl(const Buckets &buckets);
-
-  static std::vector<HistogramBucket> CreateBuckets(const Buckets &buckets);
-
-  std::vector<HistogramBucket> buckets_;
+  const Buckets::Kind kind_;
+  const uint64_t bucket_id_;
+  const uint64_t num_buckets_;
+  const double lower_bound_;
+  const double upper_bound_;
+  std::shared_ptr<CounterImpl> samples_;
 };
 
 }  // namespace tally
