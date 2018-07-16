@@ -31,8 +31,6 @@
 
 #include "m3/udp_transport.h"
 
-namespace tally {
-
 namespace m3 {
 
 class TUDPTransport::Impl : public apache::thrift::transport::TTransport {
@@ -92,5 +90,3 @@ class TUDPTransport::Impl : public apache::thrift::transport::TTransport {
 };
 
 }  // namespace m3
-
-}  // namespace tally

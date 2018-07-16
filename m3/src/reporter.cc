@@ -21,19 +21,18 @@
 #include "m3/reporter.h"
 
 #include <chrono>
-#include <unordered_map>
 #include <string>
+#include <unordered_map>
 
 #include "m3/src/reporter_impl.h"
 #include "tally/src/capable_of.h"
 
-namespace tally {
-
 namespace m3 {
 
-Reporter::Reporter(const std::string &host, uint16_t port,
-                   const std::unordered_map<std::string, std::string> &common_tags,
-                   uint32_t max_queue_size, uint16_t max_packet_size)
+Reporter::Reporter(
+    const std::string &host, uint16_t port,
+    const std::unordered_map<std::string, std::string> &common_tags,
+    uint32_t max_queue_size, uint16_t max_packet_size)
     : impl_(new Reporter::Impl(host, port, common_tags, max_queue_size,
                                max_packet_size)) {}
 
@@ -47,26 +46,28 @@ std::unique_ptr<tally::Capabilities> Reporter::Capabilities() {
 
 void Reporter::Flush() { impl_->Flush(); }
 
-void Reporter::ReportCounter(const std::string &name,
-                             const std::unordered_map<std::string, std::string> &tags,
-                             int64_t value) {
+void Reporter::ReportCounter(
+    const std::string &name,
+    const std::unordered_map<std::string, std::string> &tags, int64_t value) {
   impl_->ReportCounter(name, tags, value);
 }
 
-void Reporter::ReportGauge(const std::string &name,
-                           const std::unordered_map<std::string, std::string> &tags,
-                           double value) {
+void Reporter::ReportGauge(
+    const std::string &name,
+    const std::unordered_map<std::string, std::string> &tags, double value) {
   impl_->ReportGauge(name, tags, value);
 }
 
-void Reporter::ReportTimer(const std::string &name,
-                           const std::unordered_map<std::string, std::string> &tags,
-                           std::chrono::nanoseconds value) {
+void Reporter::ReportTimer(
+    const std::string &name,
+    const std::unordered_map<std::string, std::string> &tags,
+    std::chrono::nanoseconds value) {
   impl_->ReportTimer(name, tags, value);
 }
 
 void Reporter::ReportHistogramValueSamples(
-    const std::string &name, const std::unordered_map<std::string, std::string> &tags,
+    const std::string &name,
+    const std::unordered_map<std::string, std::string> &tags,
     uint64_t bucket_id, uint64_t num_buckets, double buckets_lower_bound,
     double buckets_upper_bound, uint64_t samples) {
   impl_->ReportHistogramValueSamples(name, tags, bucket_id, num_buckets,
@@ -75,7 +76,8 @@ void Reporter::ReportHistogramValueSamples(
 }
 
 void Reporter::ReportHistogramDurationSamples(
-    const std::string &name, const std::unordered_map<std::string, std::string> &tags,
+    const std::string &name,
+    const std::unordered_map<std::string, std::string> &tags,
     uint64_t bucket_id, uint64_t num_buckets,
     std::chrono::nanoseconds buckets_lower_bound,
     std::chrono::nanoseconds buckets_upper_bound, uint64_t samples) {
@@ -85,5 +87,3 @@ void Reporter::ReportHistogramDurationSamples(
 }
 
 }  // namespace m3
-
-}  // namespace tally

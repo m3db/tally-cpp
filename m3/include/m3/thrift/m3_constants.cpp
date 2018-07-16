@@ -6,12 +6,12 @@
  */
 #include "m3/thrift/m3_constants.h"
 
-namespace tally { namespace m3 { namespace thrift {
+namespace m3 { namespace thrift {
 
 const m3Constants g_m3_constants;
 
 m3Constants::m3Constants() {
 }
 
-}}} // namespace
+}} // namespace
 

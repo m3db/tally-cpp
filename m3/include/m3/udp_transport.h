@@ -25,7 +25,6 @@
 
 #include "thrift/transport/TTransport.h"
 
-namespace tally {
 namespace m3 {
 
 class TUDPTransport : public apache::thrift::transport::TTransport {
@@ -69,5 +68,3 @@ class TUDPTransport : public apache::thrift::transport::TTransport {
 };
 
 }  // namespace m3
-
-}  // namespace tally

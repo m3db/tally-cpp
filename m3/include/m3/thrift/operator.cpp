@@ -20,8 +20,6 @@
 
 #include "m3/thrift/m3_types.h"
 
-namespace tally {
-
 namespace m3 {
 
 namespace thrift {
@@ -38,5 +36,3 @@ bool MetricTag::operator<(MetricTag const &other) const {
 }  // namespace thrift
 
 }  // namespace m3
-
-}  // namespace tally

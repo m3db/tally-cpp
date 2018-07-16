@@ -11,7 +11,7 @@
 
 #include <thrift/TToString.h>
 
-namespace tally { namespace m3 { namespace thrift {
+namespace m3 { namespace thrift {
 
 
 CountValue::~CountValue() throw() {
@@ -925,4 +925,4 @@ void MetricBatch::printTo(std::ostream& out) const {
   out << ")";
 }
 
-}}} // namespace
+}} // namespace

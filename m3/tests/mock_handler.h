@@ -25,11 +25,11 @@
 
 #include "m3/thrift/M3.h"
 
-class MockHandler : virtual public tally::m3::thrift::M3If {
+class MockHandler : virtual public m3::thrift::M3If {
  public:
   MockHandler() {}
 
-  void emitMetricBatch(const tally::m3::thrift::MetricBatch& batch) {
+  void emitMetricBatch(const m3::thrift::MetricBatch& batch) {
     std::lock_guard<std::mutex> lock(mutex_);
     batches_.push_back(batch);
   }
@@ -39,7 +39,7 @@ class MockHandler : virtual public tally::m3::thrift::M3If {
     return batches_.size() == 0;
   }
 
-  tally::m3::thrift::MetricBatch getBatch() {
+  m3::thrift::MetricBatch getBatch() {
     std::lock_guard<std::mutex> lock(mutex_);
     auto batch = batches_[0];
     batches_.clear();
@@ -48,5 +48,5 @@ class MockHandler : virtual public tally::m3::thrift::M3If {
 
  private:
   std::mutex mutex_;
-  std::vector<tally::m3::thrift::MetricBatch> batches_;
+  std::vector<m3::thrift::MetricBatch> batches_;
 };

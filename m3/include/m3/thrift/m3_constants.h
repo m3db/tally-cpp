@@ -9,7 +9,7 @@
 
 #include "m3/thrift/m3_types.h"
 
-namespace tally { namespace m3 { namespace thrift {
+namespace m3 { namespace thrift {
 
 class m3Constants {
  public:
@@ -19,6 +19,6 @@ class m3Constants {
 
 extern const m3Constants g_m3_constants;
 
-}}} // namespace
+}} // namespace
 
 #endif

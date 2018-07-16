@@ -20,8 +20,6 @@
 
 #include "m3/reporter_builder.h"
 
-namespace tally {
-
 namespace m3 {
 
 namespace {
@@ -71,5 +69,3 @@ std::shared_ptr<Reporter> ReporterBuilder::Build() {
 }
 
 }  // namespace m3
-
-}  // namespace tally

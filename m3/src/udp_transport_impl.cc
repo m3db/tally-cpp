@@ -32,8 +32,6 @@
 using apache::thrift::transport::TTransportException;
 using boost::asio::ip::udp;
 
-namespace tally {
-
 namespace m3 {
 
 namespace {
@@ -288,5 +286,3 @@ uint16_t TUDPTransport::Impl::port() {
 }
 
 }  // namespace m3
-
-}  // namespace tally

@@ -22,13 +22,13 @@
 
 #include <chrono>
 #include <condition_variable>
-#include <unordered_map>
 #include <memory>
 #include <mutex>
 #include <queue>
 #include <set>
 #include <string>
 #include <thread>
+#include <unordered_map>
 
 #include "thrift/protocol/TCompactProtocol.h"
 
@@ -40,8 +40,6 @@
 #include "tally/stats_reporter.h"
 
 using apache::thrift::transport::TTransport;
-
-namespace tally {
 
 namespace m3 {
 
@@ -76,12 +74,14 @@ class Reporter::Impl : public tally::StatsReporter {
                    std::chrono::nanoseconds value);
 
   void ReportHistogramValueSamples(
-      const std::string &name, const std::unordered_map<std::string, std::string> &tags,
+      const std::string &name,
+      const std::unordered_map<std::string, std::string> &tags,
       uint64_t bucket_id, uint64_t num_buckets, double buckets_lower_bound,
       double buckets_upper_bound, uint64_t samples);
 
   void ReportHistogramDurationSamples(
-      const std::string &name, const std::unordered_map<std::string, std::string> &tags,
+      const std::string &name,
+      const std::unordered_map<std::string, std::string> &tags,
       uint64_t bucket_id, uint64_t num_buckets,
       std::chrono::nanoseconds buckets_lower_bound,
       std::chrono::nanoseconds buckets_upper_bound, uint64_t samples);
@@ -140,5 +140,3 @@ class Reporter::Impl : public tally::StatsReporter {
 };
 
 }  // namespace m3
-
-}  // namespace tally

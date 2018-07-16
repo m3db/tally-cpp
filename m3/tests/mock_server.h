@@ -44,10 +44,10 @@ class MockServer {
     handler_ =
         apache::thrift::stdcxx::shared_ptr<MockHandler>(new MockHandler());
     processor_ = apache::thrift::stdcxx::shared_ptr<TProcessor>(
-        new tally::m3::thrift::M3Processor(handler_));
-    transport_ = apache::thrift::stdcxx::shared_ptr<tally::m3::TUDPTransport>(
-        new tally::m3::TUDPTransport(
-            host, port, tally::m3::TUDPTransport::Kind::Server, 1440));
+        new m3::thrift::M3Processor(handler_));
+    transport_ = apache::thrift::stdcxx::shared_ptr<m3::TUDPTransport>(
+        new m3::TUDPTransport(host, port, m3::TUDPTransport::Kind::Server,
+                              1440));
     transport_->open();
   }
 
@@ -92,13 +92,13 @@ class MockServer {
 
   bool empty() { return handler_->empty(); }
 
-  tally::m3::thrift::MetricBatch getBatch() { return handler_->getBatch(); }
+  m3::thrift::MetricBatch getBatch() { return handler_->getBatch(); }
 
   uint16_t port() { return transport_->port(); }
 
  private:
   apache::thrift::stdcxx::shared_ptr<TProcessor> processor_;
-  apache::thrift::stdcxx::shared_ptr<tally::m3::TUDPTransport> transport_;
+  apache::thrift::stdcxx::shared_ptr<m3::TUDPTransport> transport_;
   apache::thrift::stdcxx::shared_ptr<MockHandler> handler_;
 
   std::mutex mutex_;

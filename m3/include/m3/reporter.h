@@ -21,13 +21,11 @@
 #pragma once
 
 #include <chrono>
-#include <unordered_map>
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 #include "tally/stats_reporter.h"
-
-namespace tally {
 
 namespace m3 {
 
@@ -60,12 +58,14 @@ class Reporter : public tally::StatsReporter {
                    std::chrono::nanoseconds value) override;
 
   void ReportHistogramValueSamples(
-      const std::string &name, const std::unordered_map<std::string, std::string> &tags,
+      const std::string &name,
+      const std::unordered_map<std::string, std::string> &tags,
       uint64_t bucket_id, uint64_t num_buckets, double buckets_lower_bound,
       double buckets_upper_bound, uint64_t samples) override;
 
   void ReportHistogramDurationSamples(
-      const std::string &name, const std::unordered_map<std::string, std::string> &tags,
+      const std::string &name,
+      const std::unordered_map<std::string, std::string> &tags,
       uint64_t bucket_id, uint64_t num_buckets,
       std::chrono::nanoseconds buckets_lower_bound,
       std::chrono::nanoseconds buckets_upper_bound, uint64_t samples) override;
@@ -80,5 +80,3 @@ class Reporter : public tally::StatsReporter {
 };
 
 }  // namespace m3
-
-}  // namespace tally

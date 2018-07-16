@@ -11,7 +11,7 @@
 #include <thrift/async/TConcurrentClientSyncInfo.h>
 #include "m3/thrift/m3_types.h"
 
-namespace tally { namespace m3 { namespace thrift {
+namespace m3 { namespace thrift {
 
 #ifdef _MSC_VER
   #pragma warning( push )
@@ -239,6 +239,6 @@ class M3ConcurrentClient : virtual public M3If {
   #pragma warning( pop )
 #endif
 
-}}} // namespace
+}} // namespace
 
 #endif

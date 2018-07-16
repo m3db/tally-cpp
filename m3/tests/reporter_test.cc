@@ -21,12 +21,12 @@
 #include <chrono>
 #include <cstdint>
 #include <iostream>
-#include <unordered_map>
 #include <memory>
 #include <mutex>
 #include <set>
 #include <string>
 #include <thread>
+#include <unordered_map>
 
 #include "gtest/gtest.h"
 #include "thrift/protocol/TCompactProtocol.h"
@@ -47,7 +47,7 @@ class ReporterTest : public ::testing::Test {
   virtual void SetUp() {
     server_ = std::shared_ptr<MockServer>(new MockServer("127.0.0.1", 0));
     thread_ = std::thread([this]() { server_->serve(); });
-    reporter_ = tally::m3::ReporterBuilder()
+    reporter_ = m3::ReporterBuilder()
                     .host("127.0.0.1")
                     .port(server_->port())
                     .max_queue_size(1000)
@@ -61,7 +61,7 @@ class ReporterTest : public ::testing::Test {
   }
 
   std::shared_ptr<MockServer> server_;
-  std::shared_ptr<tally::m3::Reporter> reporter_;
+  std::shared_ptr<m3::Reporter> reporter_;
   std::thread thread_;
 };
 
@@ -70,9 +70,9 @@ TEST_F(ReporterTest, ReportCounter) {
   std::unordered_map<std::string, std::string> tags({{"a", "1"}});
   int64_t value = 1;
 
-  std::set<tally::m3::thrift::MetricTag> expected_tags;
+  std::set<m3::thrift::MetricTag> expected_tags;
   for (auto const &entry : tags) {
-    tally::m3::thrift::MetricTag tag;
+    m3::thrift::MetricTag tag;
     tag.__set_tagName(entry.first);
     tag.__set_tagValue(entry.second);
     expected_tags.insert(tag);
@@ -103,9 +103,9 @@ TEST_F(ReporterTest, ReportGauge) {
   std::unordered_map<std::string, std::string> tags({{"a", "1"}});
   double value = 1.0;
 
-  std::set<tally::m3::thrift::MetricTag> expected_tags;
+  std::set<m3::thrift::MetricTag> expected_tags;
   for (auto const &entry : tags) {
-    tally::m3::thrift::MetricTag tag;
+    m3::thrift::MetricTag tag;
     tag.__set_tagName(entry.first);
     tag.__set_tagValue(entry.second);
     expected_tags.insert(tag);
@@ -137,9 +137,9 @@ TEST_F(ReporterTest, ReportTimer) {
   std::unordered_map<std::string, std::string> tags({{"a", "1"}});
   std::chrono::nanoseconds value(1);
 
-  std::set<tally::m3::thrift::MetricTag> expected_tags;
+  std::set<m3::thrift::MetricTag> expected_tags;
   for (auto const &entry : tags) {
-    tally::m3::thrift::MetricTag tag;
+    m3::thrift::MetricTag tag;
     tag.__set_tagName(entry.first);
     tag.__set_tagValue(entry.second);
     expected_tags.insert(tag);
@@ -171,20 +171,20 @@ TEST_F(ReporterTest, ReportHistogramValueSamples) {
   std::unordered_map<std::string, std::string> tags({{"a", "1"}});
   uint64_t value = 1;
 
-  std::set<tally::m3::thrift::MetricTag> expected_tags;
+  std::set<m3::thrift::MetricTag> expected_tags;
   for (auto const &entry : tags) {
-    tally::m3::thrift::MetricTag tag;
+    m3::thrift::MetricTag tag;
     tag.__set_tagName(entry.first);
     tag.__set_tagValue(entry.second);
     expected_tags.insert(tag);
   }
 
-  tally::m3::thrift::MetricTag bucket_tag;
+  m3::thrift::MetricTag bucket_tag;
   bucket_tag.__set_tagName("bucket");
   bucket_tag.__set_tagValue("2.000000-3.000000");
   expected_tags.insert(bucket_tag);
 
-  tally::m3::thrift::MetricTag id_tag;
+  m3::thrift::MetricTag id_tag;
   id_tag.__set_tagName("bucketid");
   id_tag.__set_tagValue("0002");
   expected_tags.insert(id_tag);
@@ -215,20 +215,20 @@ TEST_F(ReporterTest, ReportHistogramDurationSamples) {
   std::unordered_map<std::string, std::string> tags({{"a", "1"}});
   uint64_t value = 1;
 
-  std::set<tally::m3::thrift::MetricTag> expected_tags;
+  std::set<m3::thrift::MetricTag> expected_tags;
   for (auto const &entry : tags) {
-    tally::m3::thrift::MetricTag tag;
+    m3::thrift::MetricTag tag;
     tag.__set_tagName(entry.first);
     tag.__set_tagValue(entry.second);
     expected_tags.insert(tag);
   }
 
-  tally::m3::thrift::MetricTag bucket_tag;
+  m3::thrift::MetricTag bucket_tag;
   bucket_tag.__set_tagName("bucket");
   bucket_tag.__set_tagValue("2ms-3ms");
   expected_tags.insert(bucket_tag);
 
-  tally::m3::thrift::MetricTag id_tag;
+  m3::thrift::MetricTag id_tag;
   id_tag.__set_tagName("bucketid");
   id_tag.__set_tagValue("0002");
   expected_tags.insert(id_tag);

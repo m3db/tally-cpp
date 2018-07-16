@@ -20,12 +20,10 @@
 
 #pragma once
 
-#include <unordered_map>
 #include <string>
+#include <unordered_map>
 
 #include "m3/reporter.h"
-
-namespace tally {
 
 namespace m3 {
 
@@ -57,5 +55,3 @@ class ReporterBuilder {
 };
 
 }  // namespace m3
-
-}  // namespace tally
