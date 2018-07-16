@@ -13,9 +13,6 @@ install:
   - sudo apt-get update && sudo apt-get install bazel
   - sudo apt-get install cppcheck
 
-before_script:
-  - export SOURCE_FILES="tally/include/tally/*.h tally/src/*.{h,cc} tally/tests/*.{h,cc} m3/include/m3/*.h m3/src/*.{h,cc} m3/tests/*.{h,cc}"
-
 matrix:
   include:
   # Format
@@ -29,7 +26,7 @@ matrix:
         packages:
           - clang-format-4.0
     script:
-      - clang-format -i $SOURCE_FILES
+      - clang-format -i tally/include/tally/*.h tally/src/*.{h,cc} tally/tests/*.{h,cc} m3/include/m3/*.h m3/src/*.{h,cc} m3/tests/*.{h,cc}
       - |
         if [[ -n $(git diff) ]]; then
           echo "Source code is not formatted properly"
@@ -97,7 +94,7 @@ matrix:
           - g++-5
     script:
       - export CXX="g++-5"
-      - export CC="gcc-"
+      - export CC="gcc-5"
       - gcc --version
       - bazel version
       - bazel build //...
@@ -168,23 +165,6 @@ matrix:
     script:
       - export CXX="clang++-5.0"
       - export CC="clang-5.0"
-      - clang --version
-      - bazel version
-      - bazel build //...
-      - bazel test --test_output=all --test_timeout=60 //...
-  # Clang 6.0
-  - os: linux
-    env:
-      - TEST="Clang 6.0"
-    addons:
-      apt:
-        sources:
-          - llvm-toolchain-trusty-6.0
-        packages:
-          - clang-6.0
-    script:
-      - export CXX="clang++-6.0"
-      - export CC="clang-6.0"
       - clang --version
       - bazel version
       - bazel build //...
