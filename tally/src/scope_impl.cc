@@ -21,11 +21,11 @@
 #include "tally/src/scope_impl.h"
 
 #include <algorithm>
-#include <unordered_map>
 #include <mutex>
 #include <sstream>
 #include <string>
 #include <thread>
+#include <unordered_map>
 #include <utility>
 #include <vector>
 
@@ -125,7 +125,8 @@ std::unique_ptr<tally::Capabilities> ScopeImpl::Capabilities() {
 }
 
 std::shared_ptr<tally::Scope> ScopeImpl::SubScope(
-    const std::string &prefix, const std::unordered_map<std::string, std::string> &tags) {
+    const std::string &prefix,
+    const std::unordered_map<std::string, std::string> &tags) {
   std::unordered_map<std::string, std::string> new_tags;
 
   // Insert the new tags second as they take priority over the scope's tags.
@@ -167,8 +168,9 @@ std::string ScopeImpl::FullyQualifiedName(const std::string &name) {
   return stream.str();
 }
 
-std::string ScopeImpl::ScopeID(const std::string &prefix,
-                               const std::unordered_map<std::string, std::string> &tags) {
+std::string ScopeImpl::ScopeID(
+    const std::string &prefix,
+    const std::unordered_map<std::string, std::string> &tags) {
   std::vector<std::string> keys;
   keys.reserve(tags.size());
   for (auto const &tag : tags) {

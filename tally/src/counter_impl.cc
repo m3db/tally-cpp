@@ -30,9 +30,10 @@ void CounterImpl::Inc() { Inc(1); }
 
 void CounterImpl::Inc(int64_t delta) { current_ += delta; }
 
-void CounterImpl::Report(const std::string &name,
-                         const std::unordered_map<std::string, std::string> &tags,
-                         StatsReporter *reporter) {
+void CounterImpl::Report(
+    const std::string &name,
+    const std::unordered_map<std::string, std::string> &tags,
+    StatsReporter *reporter) {
   auto val = Value();
   if (val != 0 && reporter != nullptr) {
     reporter->ReportCounter(name, tags, val);

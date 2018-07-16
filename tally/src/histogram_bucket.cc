@@ -20,8 +20,8 @@
 
 #include "tally/src/histogram_bucket.h"
 
-#include <unordered_map>
 #include <string>
+#include <unordered_map>
 #include <vector>
 
 namespace tally {
@@ -38,9 +38,10 @@ HistogramBucket::HistogramBucket(Buckets::Kind kind, uint64_t bucket_id,
 
 void HistogramBucket::Record() { samples_->Inc(1); }
 
-void HistogramBucket::Report(const std::string &name,
-                             const std::unordered_map<std::string, std::string> &tags,
-                             StatsReporter *reporter) {
+void HistogramBucket::Report(
+    const std::string &name,
+    const std::unordered_map<std::string, std::string> &tags,
+    StatsReporter *reporter) {
   auto samples = samples_->Value();
   if (samples != 0 && reporter != nullptr) {
     if (kind_ == Buckets::Kind::Values) {
