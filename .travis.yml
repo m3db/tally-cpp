@@ -2,7 +2,7 @@ sudo: required
 dist: trusty
 language: cpp
 
-# Install Bazel and cppcheck and ensure we can install Clang 6.0 as an addon.
+# Install Bazel and cppcheck.
 install:
   - sudo apt-get update
   - sudo apt-get install pkg-config zip g++ zlib1g-dev unzip python
@@ -12,9 +12,6 @@ install:
   - curl https://storage.googleapis.com/bazel-apt/doc/apt-key.pub.gpg | sudo apt-key add -
   - sudo apt-get update && sudo apt-get install bazel
   - sudo apt-get install cppcheck
-  - wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
-  - sudo apt-add-repository "deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial-6.0 main"
-  - sudo apt-get update
 
 matrix:
   include:
@@ -176,13 +173,11 @@ matrix:
   - os: linux
     env:
       - TEST="Clang 6.0"
-    addons:
-      apt:
-        sources:
-          - llvm-toolchain-trusty-6.0
-        packages:
-          - clang-6.0
     script:
+      - wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
+      - sudo apt-add-repository "deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial-6.0 main"
+      - sudo apt-get update
+      - sudo apt-get install clang-6.0
       - export CXX="clang++-6.0"
       - export CC="clang-6.0"
       - clang --version
