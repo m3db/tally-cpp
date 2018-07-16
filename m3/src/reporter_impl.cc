@@ -333,8 +333,8 @@ std::string Reporter::Impl::FormatDuration(std::chrono::nanoseconds duration,
 }
 
 void Reporter::Impl::Run() {
-  // The lifetime of calc_transport is this Run method which is single threaded so we don't
-  // need to protect it with a mutex.
+  // The lifetime of calc_transport is this Run method which is single threaded
+  // so we don't need to protect it with a mutex.
   std::shared_ptr<TCalcTransport> calc_transport(new TCalcTransport());
 
   std::unique_lock<std::mutex> run_lock(run_mutex_);

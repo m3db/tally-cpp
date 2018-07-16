@@ -26,11 +26,11 @@
 #include <string>
 #include <thread>
 
+#include "tally/scope.h"
 #include "tally/src/counter_impl.h"
 #include "tally/src/gauge_impl.h"
 #include "tally/src/histogram_impl.h"
 #include "tally/src/timer_impl.h"
-#include "tally/scope.h"
 #include "tally/stats_reporter.h"
 
 namespace tally {
