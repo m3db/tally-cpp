@@ -13,37 +13,44 @@ install:
   - sudo apt-get update && sudo apt-get install bazel
   - sudo apt-get install cppcheck
 
+before_script:
+  - export SOURCE_FILES="tally/include/tally/*.h tally/src/*.{h,cc} tally/tests/*.{h,cc} m3/include/m3/*.h m3/src/*.{h,cc} m3/tests/*.{h,cc}"
+
 matrix:
   include:
+  # Format
+  - os: linux
+    env:
+      - "TEST=Format"
+    addons:
+      apt:
+        sources:
+          - llvm-toolchain-trusty-4.0
+        packages:
+          - clang-format-4.0
+    script:
+      - clang-format -i $SOURCE_FILES
+      - |
+        if [[ -n $(git diff) ]]; then
+          echo "Source code is not formatted properly"
+          echo ""
+          git diff
+          exit -1
+        fi
   # CppCheck
   - os: linux
     env:
       - TEST="CppCheck"
+    addons:
+      apt:
+        sources:
+          - ubuntu-toolchain-r-test
+        packages:
+          - gcc-6
+          - g++-6
     script:
       - cppcheck --version
-      - cppcheck --inline-suppr --enable=all --error-exitcode=1 -I m3/include/ -I tally/include/ -i m3/include/m3/thrift/ --suppress='*:m3/include/m3/thrift/*' m3/ tally/
-  # Clang
-  - os: linux
-    env:
-      - TEST="Clang"
-    script:
-      - export CXX="clang++"
-      - export CC="clang"
-      - clang --version
-      - bazel version
-      - bazel build //...
-      - bazel test --test_output=all --test_timeout=60 //...
-  # GCC
-  - os: linux
-    env:
-      - TEST="GCC"
-    script:
-      - export CXX="g++"
-      - export CC="gcc"
-      - gcc --version
-      - bazel version
-      - bazel build //...
-      - bazel test --test_output=all --test_timeout=60 //...
+      - cppcheck --inline-suppr --enable=all --error-exitcode=1 -I m3/include/ -I tally/include/ --suppress='*:m3/include/m3/thrift/*' m3/ tally/
   # Address Sanitizer
   - os: linux
     env:
@@ -66,3 +73,119 @@ matrix:
       - bazel version
       - bazel build //... --config tsan
       - bazel test --test_output=all --test_timeout=60 //... --config tsan
+  # Undefined Behavior Sanitizer
+  - os: linux
+    env:
+      - TEST="Undefined Behavior Sanitizer"
+    script:
+      - export CXX="clang++"
+      - export CC="clang"
+      - clang --version
+      - bazel version
+      - bazel build //... --config ubsan
+      - bazel test --test_output=all --test_timeout=60 //... --config ubsan
+  # G++ 5
+  - os: linux
+    env:
+      - TEST="G++ 5"
+    addons:
+      apt:
+        sources:
+          - ubuntu-toolchain-r-test
+        packages:
+          - gcc-5
+          - g++-5
+    script:
+      - export CXX="g++-5"
+      - export CC="gcc-"
+      - gcc --version
+      - bazel version
+      - bazel build //...
+      - bazel test --test_output=all --test_timeout=60 //...
+  # G++ 6
+  - os: linux
+    env:
+      - TEST="G++ 6"
+    addons:
+      apt:
+        sources:
+          - ubuntu-toolchain-r-test
+        packages:
+          - gcc-6
+          - g++-6
+    script:
+      - export CXX="g++-6"
+      - export CC="gcc-6"
+      - gcc --version
+      - bazel version
+      - bazel build //...
+      - bazel test --test_output=all --test_timeout=60 //...
+  # G++ 7
+  - os: linux
+    env:
+      - TEST="G++ 7"
+    addons:
+      apt:
+        sources:
+          - ubuntu-toolchain-r-test
+        packages:
+          - gcc-7
+          - g++-7
+    script:
+      - export CXX="g++-7"
+      - export CC="gcc-7"
+      - gcc --version
+      - bazel version
+      - bazel build //...
+      - bazel test --test_output=all --test_timeout=60 //...
+  # Clang 4.0
+  - os: linux
+    env:
+      - TEST="Clang 4.0"
+    addons:
+      apt:
+        sources:
+          - llvm-toolchain-trusty-4.0
+        packages:
+          - clang-4.0
+    script:
+      - export CXX="clang++-4.0"
+      - export CC="clang-4.0"
+      - clang --version
+      - bazel version
+      - bazel build //...
+      - bazel test --test_output=all --test_timeout=60 //...
+  # Clang 5.0
+  - os: linux
+    env:
+      - TEST="Clang 5.0"
+    addons:
+      apt:
+        sources:
+          - llvm-toolchain-trusty-5.0
+        packages:
+          - clang-5.0
+    script:
+      - export CXX="clang++-5.0"
+      - export CC="clang-5.0"
+      - clang --version
+      - bazel version
+      - bazel build //...
+      - bazel test --test_output=all --test_timeout=60 //...
+  # Clang 6.0
+  - os: linux
+    env:
+      - TEST="Clang 6.0"
+    addons:
+      apt:
+        sources:
+          - llvm-toolchain-trusty-6.0
+        packages:
+          - clang-6.0
+    script:
+      - export CXX="clang++-6.0"
+      - export CC="clang-6.0"
+      - clang --version
+      - bazel version
+      - bazel build //...
+      - bazel test --test_output=all --test_timeout=60 //...

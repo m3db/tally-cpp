@@ -20,6 +20,8 @@
 
 #pragma once
 
+#include <memory>
+
 #include "tally/capabilities.h"
 
 namespace tally {
