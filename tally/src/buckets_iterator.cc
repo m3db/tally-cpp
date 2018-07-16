@@ -35,7 +35,9 @@ BucketsIterator &BucketsIterator::operator++() {
 BucketsIterator BucketsIterator::operator++(int) {
   // Note that the postfix ++ operator takes a dummy int parameter to
   // distinguish it from the prefix ++ operator.
-  return ++(*this);
+  const auto old_value = *this;
+  ++(*this);
+  return old_value;
 }
 
 bool BucketsIterator::operator==(BucketsIterator other) const {
