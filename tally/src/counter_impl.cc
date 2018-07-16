@@ -42,8 +42,8 @@ void CounterImpl::Report(
 
 int64_t CounterImpl::Value() {
   // Load the previous value second so we don't lose any increments.
-  auto current = current_.load();
-  auto previous = previous_.load();
+  const auto current = current_.load();
+  const auto previous = previous_.load();
 
   if (current == previous) {
     return 0;
