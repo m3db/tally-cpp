@@ -178,9 +178,9 @@ std::string ScopeImpl::ScopeID(
     const std::unordered_map<std::string, std::string> &tags) {
   std::vector<std::string> keys;
   keys.reserve(tags.size());
-  for (auto const &tag : tags) {
-    keys.push_back(tag.first);
-  }
+  std::transform(
+      std::begin(tags), std::end(tags), std::back_inserter(keys),
+      [](const std::pair<std::string, std::string> &tag) { return tag.first; });
 
   std::sort(keys.begin(), keys.end());
 
