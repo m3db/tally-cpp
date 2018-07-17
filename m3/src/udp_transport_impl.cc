@@ -214,7 +214,7 @@ void TUDPTransport::Impl::flush() {
   if (size > MAX_UDP_PACKET_SIZE) {
     main_buffer_.clear();
 
-    std::stringstream msg;
+    std::ostringstream msg;
     msg << "M3 Thrift UDP Transport buffer size  " << size
         << " exceeds maximum UDP packet size" << std::endl;
     throw TTransportException(TTransportException::UNKNOWN, msg.str());

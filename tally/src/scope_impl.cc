@@ -167,7 +167,7 @@ std::string ScopeImpl::FullyQualifiedName(const std::string &name) {
 
   std::string str;
   str.reserve(prefix_.length() + separator_.length() + name.length());
-  std::stringstream stream(str);
+  std::ostringstream stream(str);
   stream << prefix_ << separator_ << name;
 
   return stream.str();
@@ -186,7 +186,7 @@ std::string ScopeImpl::ScopeID(
 
   std::string str;
   str.reserve(prefix.length() + keys.size() * 20);
-  std::stringstream stream(str);
+  std::ostringstream stream(str);
 
   stream << prefix;
   stream << "+";

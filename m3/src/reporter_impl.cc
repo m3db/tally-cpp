@@ -118,7 +118,7 @@ void Reporter::Impl::ReportHistogramValueSamples(
   auto metric_tags = ConvertTags(tags);
 
   // Add tag for bucket.
-  std::stringstream bucket_stream;
+  std::ostringstream bucket_stream;
   bucket_stream << boost::format("%s-%s") %
                        ValueBucketString(buckets_lower_bound) %
                        ValueBucketString(buckets_upper_bound);
@@ -147,7 +147,7 @@ void Reporter::Impl::ReportHistogramDurationSamples(
   auto metric_tags = ConvertTags(tags);
 
   // Add tag for bucket.
-  std::stringstream bucket_stream;
+  std::ostringstream bucket_stream;
   bucket_stream << boost::format("%s-%s") %
                        DurationBucketString(buckets_lower_bound) %
                        DurationBucketString(buckets_upper_bound);
@@ -228,7 +228,7 @@ std::string Reporter::Impl::ValueBucketString(double bucket_bound) {
     return "-infinity";
   }
 
-  std::stringstream stream;
+  std::ostringstream stream;
   stream << boost::format("%.6f") % bucket_bound;
   return stream.str();
 }
@@ -253,7 +253,7 @@ std::string Reporter::Impl::DurationBucketString(
   bool is_negative = bucket_bound.count() < 0;
   bucket_bound = std::chrono::nanoseconds(std::abs(bucket_bound.count()));
 
-  std::stringstream stream;
+  std::ostringstream stream;
   if (is_negative) {
     stream << "-";
   }
@@ -308,7 +308,7 @@ std::string Reporter::Impl::BucketID(uint64_t bucket_id, uint64_t num_buckets) {
 
   std::string fmt = "%0" + std::to_string(len) + "d";
 
-  std::stringstream stream;
+  std::ostringstream stream;
   stream << boost::format(fmt) % bucket_id;
 
   return stream.str();
