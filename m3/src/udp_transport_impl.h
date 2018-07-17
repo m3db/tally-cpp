@@ -68,6 +68,8 @@ class TUDPTransport::Impl : public apache::thrift::transport::TTransport {
 
   void write_async();
 
+  void close_and_join();
+
   const std::string host_;
   const uint16_t port_;
   const TUDPTransport::Kind kind_;

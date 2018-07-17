@@ -47,7 +47,7 @@ TUDPTransport::Impl::Impl(const std::string &host, uint16_t port,
   help_buffer_.reserve(max_packet_size * 5);
 }
 
-TUDPTransport::Impl::~Impl() { close(); }
+TUDPTransport::Impl::~Impl() { close_and_join(); }
 
 bool TUDPTransport::Impl::isOpen() {
   std::lock_guard<std::mutex> lock(mutex_);
@@ -89,7 +89,9 @@ void TUDPTransport::Impl::open() {
   open_ = true;
 }
 
-void TUDPTransport::Impl::close() {
+void TUDPTransport::Impl::close() { close_and_join(); }
+
+void TUDPTransport::Impl::close_and_join() {
   std::unique_lock<std::mutex> lock(mutex_);
   if (!open_) {
     return;

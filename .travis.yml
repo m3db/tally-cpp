@@ -34,6 +34,7 @@ matrix:
           git diff
           exit -1
         fi
+
   # CppCheck
   - os: linux
     env:
@@ -48,6 +49,31 @@ matrix:
     script:
       - cppcheck --version
       - cppcheck --inline-suppr --enable=all --error-exitcode=1 -I m3/include/ -I tally/include/ --suppress='*:m3/include/m3/thrift/*' m3/ tally/
+
+  # Clang Tidy
+  - os: linux
+    env:
+      - TEST="ClangTidy"
+    addons:
+      apt:
+        sources:
+          - llvm-toolchain-trusty-4.0
+        packages:
+          - clang-4.0
+          - clang-tidy-4.0
+    script:
+      - external/compilation-database/generate.sh
+      - clang-tidy -checks='-clang-diagnostic-pragma-once-outside-header' tally/include/tally/*.h tally/src/*.{h,cc}  m3/include/m3/*.h m3/src/*.{h,cc} > output.txt
+      - |
+        if [[ -n $(grep "warning: " output.txt) ]] || [[ -n $(grep "error: " output.txt) ]]; then
+            echo "You must pass the clang tidy checks before submitting a pull request"
+            echo ""
+            grep --color -E '^|warning: |error: ' output.txt
+            exit -1;
+        else
+            echo -e "\033[1;32m\xE2\x9C\x93 passed:\033[0m $1";
+        fi
+
   # Address Sanitizer
   - os: linux
     env:
@@ -59,6 +85,7 @@ matrix:
       - bazel version
       - bazel build //... --config asan
       - bazel test --test_output=all --test_timeout=60 //... --config asan
+
   # Thread Sanitizer
   - os: linux
     env:
@@ -70,6 +97,7 @@ matrix:
       - bazel version
       - bazel build //... --config tsan
       - bazel test --test_output=all --test_timeout=60 //... --config tsan
+
   # G++ 5
   - os: linux
     env:
@@ -88,6 +116,7 @@ matrix:
       - bazel version
       - bazel build //...
       - bazel test --test_output=all --test_timeout=60 //...
+
   # G++ 6
   - os: linux
     env:
@@ -106,6 +135,7 @@ matrix:
       - bazel version
       - bazel build //...
       - bazel test --test_output=all --test_timeout=60 //...
+
   # G++ 7
   - os: linux
     env:
@@ -124,6 +154,7 @@ matrix:
       - bazel version
       - bazel build //...
       - bazel test --test_output=all --test_timeout=60 //...
+
   # Clang 4.0
   - os: linux
     env:
@@ -141,6 +172,7 @@ matrix:
       - bazel version
       - bazel build //...
       - bazel test --test_output=all --test_timeout=60 //...
+
   # Clang 5.0
   - os: linux
     env:
@@ -158,6 +190,7 @@ matrix:
       - bazel version
       - bazel build //...
       - bazel test --test_output=all --test_timeout=60 //...
+
   # Clang 6.0
   - os: linux
     env:
