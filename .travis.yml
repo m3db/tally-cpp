@@ -22,7 +22,6 @@ matrix:
     addons:
       apt:
         sources:
-          - ubuntu-toolchain-r-test
           - llvm-toolchain-trusty-4.0
         packages:
           - clang-format-4.0
@@ -63,6 +62,8 @@ matrix:
           - clang-4.0
           - clang-tidy-4.0
     script:
+      - export CXX="clang++"
+      - export CC="clang"
       - bazel build //...
       - external/compilation-database/generate.sh
       - clang-tidy -checks='-clang-diagnostic-pragma-once-outside-header' tally/include/tally/*.h tally/src/*.{h,cc}  m3/include/m3/*.h m3/src/*.{h,cc} > output.txt
