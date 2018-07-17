@@ -41,33 +41,35 @@ ScopeBuilder::ScopeBuilder()
       tags_(DEFAULT_TAGS),
       reporter_(DEFAULT_REPORTER) {}
 
-ScopeBuilder &ScopeBuilder::reporter(std::shared_ptr<StatsReporter> reporter) {
+ScopeBuilder &ScopeBuilder::reporter(
+    std::shared_ptr<StatsReporter> reporter) noexcept {
   reporter_ = reporter;
   return *this;
 }
 
-ScopeBuilder &ScopeBuilder::prefix(const std::string &prefix) {
+ScopeBuilder &ScopeBuilder::prefix(const std::string &prefix) noexcept {
   prefix_ = prefix;
   return *this;
 }
 
-ScopeBuilder &ScopeBuilder::separator(const std::string &separator) {
+ScopeBuilder &ScopeBuilder::separator(const std::string &separator) noexcept {
   separator_ = separator;
   return *this;
 }
 
 ScopeBuilder &ScopeBuilder::tags(
-    const std::unordered_map<std::string, std::string> &tags) {
+    const std::unordered_map<std::string, std::string> &tags) noexcept {
   tags_ = tags;
   return *this;
 }
 
-ScopeBuilder &ScopeBuilder::reporting_interval(std::chrono::seconds interval) {
+ScopeBuilder &ScopeBuilder::reporting_interval(
+    std::chrono::seconds interval) noexcept {
   reporting_interval_ = interval;
   return *this;
 }
 
-std::unique_ptr<Scope> ScopeBuilder::Build() {
+std::unique_ptr<Scope> ScopeBuilder::Build() noexcept {
   return std::unique_ptr<Scope>{
       new ScopeImpl(this->prefix_, this->separator_, this->tags_,
                     this->reporting_interval_, this->reporter_)};

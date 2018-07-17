@@ -31,14 +31,14 @@ class Histogram {
   virtual ~Histogram() = default;
 
   // Record the given value.
-  virtual void Record(double) = 0;
+  virtual void Record(double) noexcept = 0;
 
   // Record the given duration.
-  virtual void Record(std::chrono::nanoseconds) = 0;
+  virtual void Record(std::chrono::nanoseconds) noexcept = 0;
 
   // Return a stopwatch which can be used to time an event and record its
   // duration.
-  virtual Stopwatch Start() = 0;
+  virtual Stopwatch Start() noexcept = 0;
 };
 
 }  // namespace tally

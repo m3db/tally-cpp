@@ -25,11 +25,11 @@
 
 namespace tally {
 
-CounterImpl::CounterImpl() : current_(0), previous_(0) {}
+CounterImpl::CounterImpl() noexcept : current_(0), previous_(0) {}
 
-void CounterImpl::Inc() { Inc(1); }
+void CounterImpl::Inc() noexcept { Inc(1); }
 
-void CounterImpl::Inc(int64_t delta) { current_ += delta; }
+void CounterImpl::Inc(int64_t delta) noexcept { current_ += delta; }
 
 void CounterImpl::Report(
     const std::string &name,

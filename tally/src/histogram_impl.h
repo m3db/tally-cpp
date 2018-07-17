@@ -40,7 +40,7 @@ class HistogramImpl : public Histogram,
   // New is used in place of the default constructor to ensure that callers are
   // returned a shared pointer to a HistogramImpl object since the class
   // inherits from the std::enable_shared_from_this class.
-  static std::shared_ptr<HistogramImpl> New(const Buckets &buckets);
+  static std::shared_ptr<HistogramImpl> New(const Buckets &buckets) noexcept;
 
   // Ensure the class is non-copyable.
   HistogramImpl(const HistogramImpl &) = delete;
@@ -48,11 +48,11 @@ class HistogramImpl : public Histogram,
   HistogramImpl &operator=(const HistogramImpl &) = delete;
 
   // Methods to implement the Histogram interface.
-  void Record(double);
+  void Record(double) noexcept;
 
-  void Record(std::chrono::nanoseconds);
+  void Record(std::chrono::nanoseconds) noexcept;
 
-  Stopwatch Start();
+  Stopwatch Start() noexcept;
 
   // Methods to implement the StopwatchRecorder interface.
   void RecordStopwatch(std::chrono::steady_clock::time_point);
@@ -63,7 +63,7 @@ class HistogramImpl : public Histogram,
               StatsReporter *reporter);
 
  private:
-  explicit HistogramImpl(const Buckets &buckets);
+  explicit HistogramImpl(const Buckets &buckets) noexcept;
 
   static std::vector<HistogramBucket> CreateBuckets(const Buckets &buckets);
 

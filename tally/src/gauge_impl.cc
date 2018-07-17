@@ -24,9 +24,9 @@
 
 namespace tally {
 
-GaugeImpl::GaugeImpl() : current_(0), updated_(false) {}
+GaugeImpl::GaugeImpl() noexcept : current_(0), updated_(false) {}
 
-void GaugeImpl::Update(double value) {
+void GaugeImpl::Update(double value) noexcept {
   current_ = value;
   updated_ = true;
 }

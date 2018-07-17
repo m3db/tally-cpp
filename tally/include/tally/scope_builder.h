@@ -35,19 +35,20 @@ class ScopeBuilder {
   ScopeBuilder();
 
   // Methods to set various options for a Scope.
-  ScopeBuilder &reporter(std::shared_ptr<StatsReporter> reporter);
+  ScopeBuilder &reporter(std::shared_ptr<StatsReporter> reporter) noexcept;
 
-  ScopeBuilder &prefix(const std::string &prefix);
+  ScopeBuilder &prefix(const std::string &prefix) noexcept;
 
-  ScopeBuilder &separator(const std::string &separator);
+  ScopeBuilder &separator(const std::string &separator) noexcept;
 
-  ScopeBuilder &tags(const std::unordered_map<std::string, std::string> &tags);
+  ScopeBuilder &tags(
+      const std::unordered_map<std::string, std::string> &tags) noexcept;
 
-  ScopeBuilder &reporting_interval(std::chrono::seconds interval);
+  ScopeBuilder &reporting_interval(std::chrono::seconds interval) noexcept;
 
   // Build constructs a Scope and begins reporting metrics if the scope's
   // reporting interval is non-zero.
-  std::unique_ptr<Scope> Build();
+  std::unique_ptr<Scope> Build() noexcept;
 
  private:
   std::string prefix_;

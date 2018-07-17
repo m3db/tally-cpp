@@ -40,7 +40,7 @@ class ScopeImpl : public Scope {
   ScopeImpl(const std::string &prefix, const std::string &separator,
             const std::unordered_map<std::string, std::string> &tags,
             std::chrono::seconds interval,
-            std::shared_ptr<StatsReporter> reporter);
+            std::shared_ptr<StatsReporter> reporter) noexcept;
 
   ~ScopeImpl();
 
@@ -50,21 +50,21 @@ class ScopeImpl : public Scope {
   ScopeImpl &operator=(const ScopeImpl &) = delete;
 
   // Methods to implement the Scope interface.
-  std::shared_ptr<tally::Counter> Counter(const std::string &name);
+  std::shared_ptr<tally::Counter> Counter(const std::string &name) noexcept;
 
-  std::shared_ptr<tally::Gauge> Gauge(const std::string &name);
+  std::shared_ptr<tally::Gauge> Gauge(const std::string &name) noexcept;
 
-  std::shared_ptr<tally::Timer> Timer(const std::string &name);
+  std::shared_ptr<tally::Timer> Timer(const std::string &name) noexcept;
 
   std::shared_ptr<tally::Histogram> Histogram(const std::string &name,
-                                              const Buckets &buckets);
+                                              const Buckets &buckets) noexcept;
 
-  std::shared_ptr<tally::Scope> SubScope(const std::string &name);
+  std::shared_ptr<tally::Scope> SubScope(const std::string &name) noexcept;
 
   std::shared_ptr<tally::Scope> Tagged(
-      const std::unordered_map<std::string, std::string> &tags);
+      const std::unordered_map<std::string, std::string> &tags) noexcept;
 
-  std::unique_ptr<tally::Capabilities> Capabilities();
+  std::unique_ptr<tally::Capabilities> Capabilities() noexcept;
 
  private:
   // SubScope constructs a subscope with the provided prefix and tags.

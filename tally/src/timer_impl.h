@@ -39,7 +39,7 @@ class TimerImpl : public Timer,
   static std::shared_ptr<TimerImpl> New(
       const std::string &name,
       const std::unordered_map<std::string, std::string> &tags,
-      std::shared_ptr<StatsReporter> reporter);
+      std::shared_ptr<StatsReporter> reporter) noexcept;
 
   // Ensure the class is non-copyable.
   TimerImpl(const TimerImpl &) = delete;
@@ -59,7 +59,7 @@ class TimerImpl : public Timer,
  private:
   TimerImpl(const std::string &name,
             const std::unordered_map<std::string, std::string> &tags,
-            std::shared_ptr<StatsReporter> reporter);
+            std::shared_ptr<StatsReporter> reporter) noexcept;
 
   const std::string name_;
   const std::unordered_map<std::string, std::string> tags_;

@@ -27,10 +27,11 @@
 
 namespace tally {
 
-HistogramImpl::HistogramImpl(const Buckets &buckets)
+HistogramImpl::HistogramImpl(const Buckets &buckets) noexcept
     : buckets_(CreateBuckets(buckets)) {}
 
-std::shared_ptr<HistogramImpl> HistogramImpl::New(const Buckets &buckets) {
+std::shared_ptr<HistogramImpl> HistogramImpl::New(
+    const Buckets &buckets) noexcept {
   return std::shared_ptr<HistogramImpl>(new HistogramImpl(buckets));
 }
 
@@ -64,7 +65,7 @@ std::vector<HistogramBucket> HistogramImpl::CreateBuckets(
   return histogram_buckets;
 }
 
-void HistogramImpl::Record(double val) {
+void HistogramImpl::Record(double val) noexcept {
   // Find the first bucket who's upper bound is greater than val.
   auto it = std::upper_bound(buckets_.begin(), buckets_.end(), val,
                              [](double lhs, const HistogramBucket &rhs) {
@@ -73,11 +74,11 @@ void HistogramImpl::Record(double val) {
   it->Record();
 }
 
-void HistogramImpl::Record(std::chrono::nanoseconds val) {
+void HistogramImpl::Record(std::chrono::nanoseconds val) noexcept {
   Record(static_cast<double>(val.count()));
 }
 
-Stopwatch HistogramImpl::Start() {
+Stopwatch HistogramImpl::Start() noexcept {
   return Stopwatch(std::chrono::steady_clock::now(), shared_from_this());
 }
 

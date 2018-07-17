@@ -31,7 +31,7 @@ namespace tally {
 
 class GaugeImpl : public Gauge {
  public:
-  GaugeImpl();
+  GaugeImpl() noexcept;
 
   // Ensure the class is non-copyable.
   GaugeImpl(const GaugeImpl &) = delete;
@@ -39,7 +39,7 @@ class GaugeImpl : public Gauge {
   GaugeImpl &operator=(const GaugeImpl &) = delete;
 
   // Methods to implement the Gauge interface.
-  void Update(double);
+  void Update(double) noexcept;
 
   // Report reports the current value of the Gauge.
   void Report(const std::string &name,

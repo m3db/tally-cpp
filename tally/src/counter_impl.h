@@ -33,7 +33,7 @@ namespace tally {
 
 class CounterImpl : public Counter {
  public:
-  CounterImpl();
+  CounterImpl() noexcept;
 
   // Ensure the class is non-copyable.
   CounterImpl(const CounterImpl &) = delete;
@@ -41,9 +41,9 @@ class CounterImpl : public Counter {
   CounterImpl &operator=(const CounterImpl &) = delete;
 
   // Methods to implement the Counter interface.
-  void Inc();
+  void Inc() noexcept;
 
-  void Inc(std::int64_t);
+  void Inc(std::int64_t) noexcept;
 
   // Report reports the current value of the counter.
   void Report(const std::string &name,

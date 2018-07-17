@@ -27,7 +27,7 @@ class Gauge {
   virtual ~Gauge() = default;
 
   // Set the value of the Gauge.
-  virtual void Update(double) = 0;
+  virtual void Update(double) noexcept = 0;
 };
 
 }  // namespace tally

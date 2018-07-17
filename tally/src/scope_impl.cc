@@ -38,7 +38,7 @@ namespace tally {
 ScopeImpl::ScopeImpl(const std::string &prefix, const std::string &separator,
                      const std::unordered_map<std::string, std::string> &tags,
                      std::chrono::seconds interval,
-                     std::shared_ptr<StatsReporter> reporter)
+                     std::shared_ptr<StatsReporter> reporter) noexcept
     : prefix_(prefix),
       separator_(separator),
       tags_(tags),
@@ -69,7 +69,8 @@ ScopeImpl::~ScopeImpl() {
   Report();
 }
 
-std::shared_ptr<tally::Counter> ScopeImpl::Counter(const std::string &name) {
+std::shared_ptr<tally::Counter> ScopeImpl::Counter(
+    const std::string &name) noexcept {
   std::lock_guard<std::mutex> lock(this->counters_mutex_);
 
   auto entry = this->counters_.insert(
@@ -78,7 +79,8 @@ std::shared_ptr<tally::Counter> ScopeImpl::Counter(const std::string &name) {
   return entry.first->second;
 }
 
-std::shared_ptr<tally::Gauge> ScopeImpl::Gauge(const std::string &name) {
+std::shared_ptr<tally::Gauge> ScopeImpl::Gauge(
+    const std::string &name) noexcept {
   std::lock_guard<std::mutex> lock(this->gauges_mutex_);
 
   auto entry =
@@ -87,7 +89,8 @@ std::shared_ptr<tally::Gauge> ScopeImpl::Gauge(const std::string &name) {
   return entry.first->second;
 }
 
-std::shared_ptr<tally::Timer> ScopeImpl::Timer(const std::string &name) {
+std::shared_ptr<tally::Timer> ScopeImpl::Timer(
+    const std::string &name) noexcept {
   std::lock_guard<std::mutex> lock(this->timers_mutex_);
 
   // Since the timer reports metrics itself it must be initialized with the
@@ -98,8 +101,8 @@ std::shared_ptr<tally::Timer> ScopeImpl::Timer(const std::string &name) {
   return entry.first->second;
 }
 
-std::shared_ptr<tally::Histogram> ScopeImpl::Histogram(const std::string &name,
-                                                       const Buckets &buckets) {
+std::shared_ptr<tally::Histogram> ScopeImpl::Histogram(
+    const std::string &name, const Buckets &buckets) noexcept {
   std::lock_guard<std::mutex> lock(this->histograms_mutex_);
 
   auto entry = this->histograms_.insert(
@@ -108,17 +111,18 @@ std::shared_ptr<tally::Histogram> ScopeImpl::Histogram(const std::string &name,
   return entry.first->second;
 }
 
-std::shared_ptr<tally::Scope> ScopeImpl::SubScope(const std::string &name) {
+std::shared_ptr<tally::Scope> ScopeImpl::SubScope(
+    const std::string &name) noexcept {
   return SubScope(FullyQualifiedName(name),
                   std::unordered_map<std::string, std::string>{});
 }
 
 std::shared_ptr<tally::Scope> ScopeImpl::Tagged(
-    const std::unordered_map<std::string, std::string> &tags) {
+    const std::unordered_map<std::string, std::string> &tags) noexcept {
   return SubScope(prefix_, tags);
 }
 
-std::unique_ptr<tally::Capabilities> ScopeImpl::Capabilities() {
+std::unique_ptr<tally::Capabilities> ScopeImpl::Capabilities() noexcept {
   if (reporter_ == nullptr) {
     return std::unique_ptr<tally::Capabilities>(new CapableOf(false, false));
   }

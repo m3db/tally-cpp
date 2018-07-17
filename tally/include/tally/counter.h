@@ -29,10 +29,10 @@ class Counter {
   virtual ~Counter() = default;
 
   // Increments the counter by 1.
-  virtual void Inc() = 0;
+  virtual void Inc() noexcept = 0;
 
   // Increments the counter by `value`.
-  virtual void Inc(int64_t value) = 0;
+  virtual void Inc(int64_t value) noexcept = 0;
 };
 
 }  // namespace tally

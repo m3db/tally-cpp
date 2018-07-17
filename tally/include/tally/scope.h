@@ -37,30 +37,33 @@ class Scope {
   virtual ~Scope() = default;
 
   // Counter returns a new Counter with the provided name.
-  virtual std::shared_ptr<tally::Counter> Counter(const std::string &name) = 0;
+  virtual std::shared_ptr<tally::Counter> Counter(
+      const std::string &name) noexcept = 0;
 
   // Gauge returns a new Gauge with the provided name.
-  virtual std::shared_ptr<tally::Gauge> Gauge(const std::string &name) = 0;
+  virtual std::shared_ptr<tally::Gauge> Gauge(
+      const std::string &name) noexcept = 0;
 
   // Timer returns a new Timer with the provided name.
-  virtual std::shared_ptr<tally::Timer> Timer(const std::string &name) = 0;
+  virtual std::shared_ptr<tally::Timer> Timer(
+      const std::string &name) noexcept = 0;
 
   // Histogram returns a new Histogram with the provided name.
   virtual std::shared_ptr<tally::Histogram> Histogram(
-      const std::string &name, const Buckets &buckets) = 0;
+      const std::string &name, const Buckets &buckets) noexcept = 0;
 
   // SubScope creates a new child scope with the same tags as the parent but
   // with the additional name.
-  virtual std::shared_ptr<Scope> SubScope(const std::string &name) = 0;
+  virtual std::shared_ptr<Scope> SubScope(const std::string &name) noexcept = 0;
 
   // Tagged creates a new child scope with the same name as the parent and with
   // the tags of the parent and those provided. The provided tags take
   // precedence over the parent's tags.
   virtual std::shared_ptr<Scope> Tagged(
-      const std::unordered_map<std::string, std::string> &tags) = 0;
+      const std::unordered_map<std::string, std::string> &tags) noexcept = 0;
 
   // Capabilities returns the Capabilities of the Scope.
-  virtual std::unique_ptr<tally::Capabilities> Capabilities() = 0;
+  virtual std::unique_ptr<tally::Capabilities> Capabilities() noexcept = 0;
 };
 
 }  // namespace tally
