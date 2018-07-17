@@ -25,7 +25,7 @@
 
 namespace tally {
 
-CounterImpl::CounterImpl() noexcept : current_(0), previous_(0) {}
+CounterImpl::CounterImpl() noexcept : previous_(0), current_(0) {}
 
 void CounterImpl::Inc() noexcept { Inc(1); }
 
@@ -42,15 +42,9 @@ void CounterImpl::Report(
 }
 
 int64_t CounterImpl::Value() {
-  std::lock_guard<std::mutex> lock(mutex_);
-
-  // Load the value of current_ while we hold the lock to ensure an older value
-  // can never overwite a newer one.
   const auto current = current_.load();
-
   const auto previous = previous_;
   previous_ = current;
-
   return current - previous;
 }
 

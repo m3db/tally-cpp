@@ -45,20 +45,19 @@ class CounterImpl : public Counter {
 
   void Inc(int64_t) noexcept;
 
-  // Report reports the current value of the counter.
+  // Report reports the current value of the counter. It must only be called
+  // from a single thread.
   void Report(const std::string &name,
               const std::unordered_map<std::string, std::string> &tags,
               StatsReporter *reporter);
 
-  // Value returns the current value of the counter.
+  // Value returns the current value of the counter. It must only be called from
+  // a single thread.
   int64_t Value();
 
  private:
-  std::atomic<int64_t> current_;
-
-  // previous_ is protected by mutex_;
-  std::mutex mutex_;
   int64_t previous_;
+  std::atomic<int64_t> current_;
 };
 
 }  // namespace tally
