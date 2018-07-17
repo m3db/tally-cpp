@@ -50,7 +50,7 @@ std::vector<HistogramBucket> HistogramImpl::CreateBuckets(
     auto lower_bound = std::numeric_limits<double>::min();
     for (auto it = buckets.begin(); it != buckets.end(); it++) {
       auto upper_bound = *it;
-      auto index = uint64_t(std::distance(buckets.begin(), it));
+      auto index = static_cast<uint64_t>(std::distance(buckets.begin(), it));
       histogram_buckets.push_back(HistogramBucket(kind, index, buckets.size(),
                                                   lower_bound, upper_bound));
       lower_bound = upper_bound;
