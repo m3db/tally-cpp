@@ -363,16 +363,13 @@ void Reporter::Impl::Run() {
       if (queue_.size() == 0) {
         break;
       }
-      auto metric = queue_.front();
+      thrift::Metric metric = queue_.front();
+      queue_.pop();
 
       // Release the queue lock so other threads can enqueue metrics while this
       // thread processes its current batch of metrics.
       queue_lock.unlock();
-
       Process(metric, calc_transport);
-
-      queue_lock.lock();
-      queue_.pop();
     }
 
     // Wait on condition variable at the end of the loop in case any metrics
