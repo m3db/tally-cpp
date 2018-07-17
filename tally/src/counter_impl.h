@@ -43,7 +43,7 @@ class CounterImpl : public Counter {
   // Methods to implement the Counter interface.
   void Inc() noexcept;
 
-  void Inc(std::int64_t) noexcept;
+  void Inc(int64_t) noexcept;
 
   // Report reports the current value of the counter.
   void Report(const std::string &name,
@@ -51,14 +51,14 @@ class CounterImpl : public Counter {
               StatsReporter *reporter);
 
   // Value returns the current value of the counter.
-  std::int64_t Value();
+  int64_t Value();
 
  private:
-  std::atomic<std::int64_t> current_;
+  std::atomic<int64_t> current_;
 
   // previous_ is protected by mutex_;
   std::mutex mutex_;
-  std::int64_t previous_;
+  int64_t previous_;
 };
 
 }  // namespace tally
