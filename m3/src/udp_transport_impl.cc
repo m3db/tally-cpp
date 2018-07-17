@@ -135,7 +135,7 @@ uint32_t TUDPTransport::Impl::read_virt(uint8_t *buf, uint32_t len) {
     throw TTransportException(TTransportException::NOT_OPEN);
   }
 
-  auto offset = std::min(static_cast<size_t>(len), main_buffer_.size());
+  auto const offset = std::min(static_cast<size_t>(len), main_buffer_.size());
 
   std::copy(main_buffer_.begin(), main_buffer_.begin() + offset, buf);
 
@@ -206,7 +206,7 @@ void TUDPTransport::Impl::flush() {
         "TUDPTransport does not support concurrent send operations");
   }
 
-  auto size = main_buffer_.size();
+  auto const size = main_buffer_.size();
   if (size == 0) {
     return;
   }
@@ -283,7 +283,7 @@ uint16_t TUDPTransport::Impl::port() {
     throw TTransportException(TTransportException::NOT_OPEN);
   }
 
-  auto endpoint = socket_->local_endpoint();
+  auto const endpoint = socket_->local_endpoint();
   return endpoint.port();
 }
 

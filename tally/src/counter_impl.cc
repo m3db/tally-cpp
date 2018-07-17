@@ -35,7 +35,7 @@ void CounterImpl::Report(
     const std::string &name,
     const std::unordered_map<std::string, std::string> &tags,
     StatsReporter *reporter) {
-  auto val = Value();
+  auto const val = Value();
   if (val != 0 && reporter != nullptr) {
     reporter->ReportCounter(name, tags, val);
   }

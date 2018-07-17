@@ -38,8 +38,8 @@ std::shared_ptr<HistogramImpl> HistogramImpl::New(
 std::vector<HistogramBucket> HistogramImpl::CreateBuckets(
     const Buckets &buckets) {
   std::vector<HistogramBucket> histogram_buckets;
-  auto size = buckets.size();
-  auto kind = buckets.kind();
+  auto const size = buckets.size();
+  auto const kind = buckets.kind();
   if (size == 0) {
     histogram_buckets.push_back(
         HistogramBucket(kind, 0, 1, std::numeric_limits<double>::min(),
@@ -84,7 +84,7 @@ Stopwatch HistogramImpl::Start() noexcept {
 
 void HistogramImpl::RecordStopwatch(
     std::chrono::steady_clock::time_point start) {
-  auto duration = std::chrono::steady_clock::now() - start;
+  auto const duration = std::chrono::steady_clock::now() - start;
   Record(duration);
 }
 

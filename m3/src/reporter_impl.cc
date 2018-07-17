@@ -174,8 +174,8 @@ void Reporter::Impl::ReportMetric(const std::string &name,
   metric.__set_tags(tags);
   metric.__set_metricValue(value);
 
-  auto now = std::chrono::system_clock::now();
-  auto nanos = std::chrono::duration_cast<std::chrono::nanoseconds>(
+  auto const now = std::chrono::system_clock::now();
+  auto const nanos = std::chrono::duration_cast<std::chrono::nanoseconds>(
       now.time_since_epoch());
   metric.__set_timestamp(nanos.count());
 
@@ -258,7 +258,8 @@ std::string Reporter::Impl::DurationBucketString(
     stream << "-";
   }
 
-  auto seconds = std::chrono::duration_cast<std::chrono::seconds>(bucket_bound);
+  auto const seconds =
+      std::chrono::duration_cast<std::chrono::seconds>(bucket_bound);
   if (seconds.count() < 1) {
     // Durations less than one second format use a smaller unit (milli-, micro-,
     // or nanoseconds) to ensure that the leading digit is non-zero.
@@ -276,10 +277,11 @@ std::string Reporter::Impl::DurationBucketString(
       stream << "ns";
     }
   } else {
-    auto hours = std::chrono::duration_cast<std::chrono::hours>(bucket_bound);
-    auto minutes =
+    auto const hours =
+        std::chrono::duration_cast<std::chrono::hours>(bucket_bound);
+    auto const minutes =
         std::chrono::duration_cast<std::chrono::minutes>(bucket_bound - hours);
-    auto nanos = bucket_bound - hours - minutes;
+    auto const nanos = bucket_bound - hours - minutes;
 
     if (hours.count() > 0) {
       stream << hours.count();
@@ -383,7 +385,7 @@ void Reporter::Impl::Process(thrift::Metric metric,
                              std::shared_ptr<TCalcTransport> calc_transport) {
   TCompactProtocol calc_protocol(calc_transport);
   metric.write(&calc_protocol);
-  auto size = calc_transport->size();
+  auto const size = calc_transport->size();
 
   if (size > max_packet_size_) {
     Flush();

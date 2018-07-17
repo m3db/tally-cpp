@@ -49,7 +49,7 @@ Stopwatch TimerImpl::Start() {
 }
 
 void TimerImpl::RecordStopwatch(std::chrono::steady_clock::time_point start) {
-  auto duration = std::chrono::steady_clock::now() - start;
+  auto const duration = std::chrono::steady_clock::now() - start;
   Record(duration);
 }
 

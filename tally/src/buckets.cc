@@ -39,7 +39,7 @@ Buckets Buckets::LinearValues(double start, double width, uint64_t num) {
     throw std::invalid_argument("Bucket width must be positive");
   }
 
-  auto calculator =
+  auto const calculator =
       BucketsCalculator(BucketsCalculator::Growth::Linear, start, width);
   return Buckets(Buckets::Kind::Values, calculator, num);
 }
@@ -49,7 +49,7 @@ Buckets Buckets::ExponentialValues(double start, double factor, uint64_t num) {
     throw std::invalid_argument("Bucket factor must be greater than 1");
   }
 
-  auto calculator =
+  auto const calculator =
       BucketsCalculator(BucketsCalculator::Growth::Exponential, start, factor);
   return Buckets(Buckets::Kind::Values, calculator, num);
 }
@@ -59,9 +59,9 @@ Buckets Buckets::LinearDurations(std::chrono::nanoseconds start,
   if (width <= std::chrono::nanoseconds(0)) {
     throw std::invalid_argument("Bucket width must be positive");
   }
-  auto calculator = BucketsCalculator(BucketsCalculator::Growth::Linear,
-                                      static_cast<double>(start.count()),
-                                      static_cast<double>(width.count()));
+  auto const calculator = BucketsCalculator(BucketsCalculator::Growth::Linear,
+                                            static_cast<double>(start.count()),
+                                            static_cast<double>(width.count()));
   return Buckets(Buckets::Kind::Durations, calculator, num);
 }
 
@@ -71,9 +71,9 @@ Buckets Buckets::ExponentialDurations(std::chrono::nanoseconds start,
     throw std::invalid_argument("Bucket factor must be greater than 1");
   }
 
-  auto calculator = BucketsCalculator(BucketsCalculator::Growth::Exponential,
-                                      static_cast<double>(start.count()),
-                                      static_cast<double>(factor));
+  auto const calculator = BucketsCalculator(
+      BucketsCalculator::Growth::Exponential,
+      static_cast<double>(start.count()), static_cast<double>(factor));
   return Buckets(Buckets::Kind::Durations, calculator, num);
 }
 
