@@ -10,7 +10,7 @@ def load_com_google_googletest():
 def load_com_github_nelhage_rules_boost():
     native.git_repository(
         name = "com_github_nelhage_rules_boost",
-        commit = "aebc446ac0c02efdab3e1200e3b0221bd0ddb8da",
+        commit = "8cbc2be26be786d6f850fcf229dc06d158a79d81",
         remote = "https://github.com/nelhage/rules_boost",
     )
 
