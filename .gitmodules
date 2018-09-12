@@ -1,0 +1,3 @@
+[submodule "external/compilation-database"]
+	path = external/compilation-database
+	url = https://github.com/grailbio/bazel-compilation-database.git

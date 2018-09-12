@@ -2,7 +2,7 @@ sudo: required
 dist: trusty
 language: cpp
 
-# Install Bazel.
+# Install Bazel and cppcheck.
 install:
   - sudo apt-get update
   - sudo apt-get install pkg-config zip g++ zlib1g-dev unzip python
@@ -11,11 +11,207 @@ install:
   - sudo echo "deb [arch=amd64] http://storage.googleapis.com/bazel-apt stable jdk1.8" | sudo tee /etc/apt/sources.list.d/bazel.list
   - curl https://storage.googleapis.com/bazel-apt/doc/apt-key.pub.gpg | sudo apt-key add -
   - sudo apt-get update && sudo apt-get install bazel
+  - sudo apt-get install cppcheck
 
-compiler:
-  - clang
-  - gcc
+matrix:
+  include:
+  # Format
+  - os: linux
+    env:
+      - "TEST=Format"
+    addons:
+      apt:
+        sources:
+          - llvm-toolchain-trusty-4.0
+        packages:
+          - clang-format-4.0
+    script:
+      - clang-format -i tally/include/tally/*.h tally/src/*.{h,cc} tally/tests/*.{h,cc} m3/include/m3/*.h m3/src/*.{h,cc} m3/tests/*.{h,cc}
+      - |
+        if [[ -n $(git diff) ]]; then
+          echo "Source code is not formatted properly"
+          echo ""
+          git diff
+          exit -1
+        fi
 
-script:
-  - bazel build //...
-  # - bazel test //...
+  # CppCheck
+  - os: linux
+    env:
+      - TEST="CppCheck"
+    addons:
+      apt:
+        sources:
+          - ubuntu-toolchain-r-test
+        packages:
+          - gcc-6
+          - g++-6
+    script:
+      - cppcheck --version
+      - cppcheck --inline-suppr --enable=all --error-exitcode=1 -I m3/include/ -I tally/include/ --suppress='*:m3/include/m3/thrift/*' m3/ tally/
+
+  # TODO(jeromefroe): clang-tidy is unable to find the header files it needs when it runs
+  # so we need to find out why the generate script we use to create the compile command
+  # database isn't identifying them properly.
+  # # Clang Tidy
+  # - os: linux
+  #   env:
+  #     - TEST="ClangTidy"
+  #   addons:
+  #     apt:
+  #       sources:
+  #         - llvm-toolchain-trusty-4.0
+  #       packages:
+  #         - clang-4.0
+  #         - clang-tidy-4.0
+  #   script:
+  #     - export CXX="clang++"
+  #     - export CC="clang"
+  #     - bazel build //...
+  #     - external/compilation-database/generate.sh
+  #     - clang-tidy tally/src/*.cc m3/src/*.cc > output.txt
+  #     - |
+  #       if [[ -n $(grep "warning: " output.txt) ]] || [[ -n $(grep "error: " output.txt) ]]; then
+  #           echo "You must pass the clang tidy checks before submitting a pull request"
+  #           echo ""
+  #           grep --color -E '^|warning: |error: ' output.txt
+  #           exit -1;
+  #       else
+  #           echo -e "\033[1;32m\xE2\x9C\x93 passed:\033[0m $1";
+  #       fi
+
+  # Address Sanitizer
+  - os: linux
+    env:
+      - TEST="Address Sanitizer"
+    script:
+      - export CXX="clang++"
+      - export CC="clang"
+      - clang --version
+      - bazel version
+      - bazel build //... --config asan
+      - bazel test --test_output=all --test_timeout=60 //... --config asan
+
+  # Thread Sanitizer
+  - os: linux
+    env:
+      - TEST="Thread Sanitizer"
+    script:
+      - export CXX="clang++"
+      - export CC="clang"
+      - clang --version
+      - bazel version
+      - bazel build //... --config tsan
+      - bazel test --test_output=all --test_timeout=60 //... --config tsan
+
+  # G++ 5
+  - os: linux
+    env:
+      - TEST="G++ 5"
+    addons:
+      apt:
+        sources:
+          - ubuntu-toolchain-r-test
+        packages:
+          - gcc-5
+          - g++-5
+    script:
+      - export CXX="g++-5"
+      - export CC="gcc-5"
+      - gcc --version
+      - bazel version
+      - bazel build //...
+      - bazel test --test_output=all --test_timeout=60 //...
+
+  # G++ 6
+  - os: linux
+    env:
+      - TEST="G++ 6"
+    addons:
+      apt:
+        sources:
+          - ubuntu-toolchain-r-test
+        packages:
+          - gcc-6
+          - g++-6
+    script:
+      - export CXX="g++-6"
+      - export CC="gcc-6"
+      - gcc --version
+      - bazel version
+      - bazel build //...
+      - bazel test --test_output=all --test_timeout=60 //...
+
+  # G++ 7
+  - os: linux
+    env:
+      - TEST="G++ 7"
+    addons:
+      apt:
+        sources:
+          - ubuntu-toolchain-r-test
+        packages:
+          - gcc-7
+          - g++-7
+    script:
+      - export CXX="g++-7"
+      - export CC="gcc-7"
+      - gcc --version
+      - bazel version
+      - bazel build //...
+      - bazel test --test_output=all --test_timeout=60 //...
+
+  # Clang 4.0
+  - os: linux
+    env:
+      - TEST="Clang 4.0"
+    addons:
+      apt:
+        sources:
+          - llvm-toolchain-trusty-4.0
+        packages:
+          - clang-4.0
+    script:
+      - export CXX="clang++-4.0"
+      - export CC="clang-4.0"
+      - clang --version
+      - bazel version
+      - bazel build //...
+      - bazel test --test_output=all --test_timeout=60 //...
+
+  # Clang 5.0
+  - os: linux
+    env:
+      - TEST="Clang 5.0"
+    addons:
+      apt:
+        sources:
+          - llvm-toolchain-trusty-5.0
+        packages:
+          - clang-5.0
+    script:
+      - export CXX="clang++-5.0"
+      - export CC="clang-5.0"
+      - clang --version
+      - bazel version
+      - bazel build //...
+      - bazel test --test_output=all --test_timeout=60 //...
+
+  # Clang 6.0
+  - os: linux
+    env:
+      - TEST="Clang 6.0"
+    addons:
+      apt:
+        sources:
+          - ubuntu-toolchain-r-test
+          - llvm-toolchain-trusty-6.0
+        packages:
+          - clang-6.0
+    script:
+      - export CXX="clang++-6.0"
+      - export CC="clang-6.0"
+      - clang --version
+      - bazel version
+      - bazel build //...
+      - bazel test --test_output=all --test_timeout=60 //...

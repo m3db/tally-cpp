@@ -1,0 +1,41 @@
+# Address Sanitizer
+# To use it: bazel build --config asan //...
+build:asan --strip=never
+build:asan --copt -fsanitize=address
+build:asan --copt -DADDRESS_SANITIZER
+build:asan --copt -O0
+build:asan --copt -fno-omit-frame-pointer
+build:asan --copt -g
+build:asan --linkopt -fsanitize=address
+build:asan --cc_output_directory_tag=asan
+
+# Thread Sanitizer
+# To use it: bazel build --config tsan //...
+build:tsan --strip=never
+build:tsan --copt -fsanitize=thread
+build:tsan --copt -DTHREAD_SANITIZER
+build:tsan --copt -DDYNAMIC_ANNOTATIONS_ENABLED=1
+build:tsan --copt -DDYNAMIC_ANNOTATIONS_EXTERNAL_IMPL=1
+build:tsan --copt -O0
+build:tsan --copt -fno-omit-frame-pointer
+build:tsan --linkopt -fsanitize=thread
+build:tsan --cc_output_directory_tag=tsan
+
+# Undefined Behavior Sanitizer
+# To use it: bazel build --config ubsan //...
+build:ubsan --strip=never
+build:ubsan --copt -fsanitize=undefined
+build:ubsan --copt -O0
+build:ubsan --copt -fno-omit-frame-pointer
+build:ubsan --linkopt -fsanitize=undefined
+build:ubsan --cc_output_directory_tag=ubsan
+
+# Memory Sanitizer
+# To use it: bazel build --config msan //...
+build:msan --strip=never
+build:msan --copt -fsanitize=memory
+build:msan --copt -DADDRESS_SANITIZER
+build:msan --copt -O0
+build:msan --copt -fno-omit-frame-pointer
+build:msan --linkopt -fsanitize=memory
+build:msan --cc_output_directory_tag=msan
