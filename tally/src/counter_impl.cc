@@ -27,7 +27,7 @@ namespace tally {
 
 // cppcheck reports a false positive error that previous is not initialized.
 //
-// cppcheck-suppress unusedFunction
+// cppcheck-suppress uninitMemberVarPrivate
 CounterImpl::CounterImpl() noexcept : previous_(0), current_(0) {}
 
 void CounterImpl::Inc() noexcept { Inc(1); }
