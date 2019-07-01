@@ -22,7 +22,7 @@ matrix:
     addons:
       apt:
         sources:
-          - llvm-toolchain-trusty-4.0
+          - llvm-toolchain-xenial-4.0
         packages:
           - clang-format-4.0
     script:
@@ -60,7 +60,7 @@ matrix:
   #   addons:
   #     apt:
   #       sources:
-  #         - llvm-toolchain-trusty-4.0
+  #         - llvm-toolchain-xenial-4.0
   #       packages:
   #         - clang-4.0
   #         - clang-tidy-4.0
@@ -168,7 +168,7 @@ matrix:
     addons:
       apt:
         sources:
-          - llvm-toolchain-trusty-4.0
+          - llvm-toolchain-xenial-4.0
         packages:
           - clang-4.0
     script:
@@ -186,7 +186,7 @@ matrix:
     addons:
       apt:
         sources:
-          - llvm-toolchain-trusty-5.0
+          - llvm-toolchain-xenial-5.0
         packages:
           - clang-5.0
     script:
@@ -205,7 +205,7 @@ matrix:
       apt:
         sources:
           - ubuntu-toolchain-r-test
-          - llvm-toolchain-trusty-6.0
+          - llvm-toolchain-xenial-6.0
         packages:
           - clang-6.0
     script:
