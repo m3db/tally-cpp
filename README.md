@@ -88,6 +88,8 @@ add the following to your `WORKSPACE` file:
 ```python
 workspace(name = "com_github_jeromefroe_tally_cpp_example")
 
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
 http_archive(
     name = "com_github_m3db_tally_cpp",
     strip_prefix = "tally-cpp-master",
