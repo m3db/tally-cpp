@@ -69,20 +69,18 @@ int main(int argc, char** argv) {
 
 ## Building
 
-[Bazel](https://bazel.build/) is used to build `tally-cpp`. In addition to Bazel, `tally-cpp`
-also requires GNU build tools:
+[Bazel] is used to build `tally-cpp`. In addition to Bazel, `tally-cpp` also requires GNU build
+tools:
 
-  - autoconf 2.65
-  - automake 1.13
-  - libtool 1.5.24
+- autoconf 2.65
+- automake 1.13
+- libtool 1.5.24
 
-This requirement stems from the fact that `tally-cpp` depends on
-[Apache thrift](https://github.com/apache/thrift) for the default reporter implementation. Thrift
-uses CMake as its build system and has some pre-build steps which generate necessary header
-files. We use Bazel's [`repository_rules`](https://docs.bazel.build/versions/master/skylark/repository_rules.html)
-feature to ensure these pre-build commands are run after fetching the Thrift source code, following
-the approach taken by Envoy and discussed in
-[this blog post](https://blog.envoyproxy.io/external-c-dependency-management-in-bazel-dd37477422f5).
+This requirement stems from the fact that `tally-cpp` depends on [Apache thrift] for the default
+reporter implementation. Thrift uses CMake as its build system and has some pre-build steps which
+generate necessary header files. We use Bazel's [`repository_rules`] feature to ensure these
+pre-build commands are run after fetching the Thrift source code, following the approach taken by
+Envoy and discussed in [this blog post].
 
 To use tally in your project you'll need to first at it as a dependency to your project. First
 add the following to your `WORKSPACE` file:
@@ -108,9 +106,9 @@ boost_deps()
 When you call `tally_cpp_repositories()` in your WORKSPACE file you'll introduce the following
 dependencies to your project:
 
-  - `load_com_google_googletest()` for Google gtest
-  - `load_com_github_nelhage_rules_boost()` for Boost
-  - `load_org_apache_thrift()` for Apache Thrift
+- `load_com_google_googletest()` for Google gtest
+- `load_com_github_nelhage_rules_boost()` for Boost
+- `load_org_apache_thrift()` for Apache Thrift
 
 In addition, you also need to load and call `boost_deps()` to add the necessary boost libraries.
 
@@ -132,16 +130,22 @@ cc_binary(
 
 To check out the repo and build the library:
 
-```
+```bash
 bazel build //...     # build everything
 bazel build //tally   # build just the tally library
 ```
 
 To run the unit tests:
 
-```
+```bash
 bazel test //...            # run all unit tests
 bazel test //m3/tests:unit  # run just the m3 tests
 ```
 
 We try to adhere to the [Google C++ Style Guide](https://google.github.io/styleguide/cppguide.html).
+
+[Bazel]: https://bazel.build/
+[Apache thrift]: https://github.com/apache/thrift
+[`repository_rules`]: https://docs.bazel.build/versions/master/skylark/repository_rules.html
+[this blog post]: https://blog.envoyproxy.io/external-c-dependency-management-in-bazel-dd37477422f5
+[Google C++ Style Guide]: https://google.github.io/styleguide/cppguide.html

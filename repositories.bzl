@@ -1,5 +1,8 @@
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
+
 def load_com_google_googletest():
-    native.http_archive(
+    http_archive(
         name = "com_google_googletest",
         strip_prefix = "googletest-ba96d0b1161f540656efdaed035b3c062b60e006",
         urls = [
@@ -8,9 +11,9 @@ def load_com_google_googletest():
     )
 
 def load_com_github_nelhage_rules_boost():
-    native.git_repository(
+    git_repository(
         name = "com_github_nelhage_rules_boost",
-        commit = "8cbc2be26be786d6f850fcf229dc06d158a79d81",
+        commit = "6d6fd834281cb8f8e758dd9ad76df86304bf1869",
         remote = "https://github.com/nelhage/rules_boost",
     )
 
