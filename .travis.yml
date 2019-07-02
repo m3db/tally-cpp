@@ -1,5 +1,5 @@
 sudo: required
-dist: trusty
+dist: xenial
 language: cpp
 
 # Install Bazel and cppcheck.
@@ -7,7 +7,7 @@ install:
   - sudo apt-get update
   - sudo apt-get install pkg-config zip g++ zlib1g-dev unzip python
   - sudo add-apt-repository -y ppa:webupd8team/java
-  - sudo apt-get update && sudo apt-get install oracle-java8-installer
+  - sudo apt-get update && sudo apt-get install openjdk-8-jdk
   - sudo echo "deb [arch=amd64] http://storage.googleapis.com/bazel-apt stable jdk1.8" | sudo tee /etc/apt/sources.list.d/bazel.list
   - curl https://storage.googleapis.com/bazel-apt/doc/apt-key.pub.gpg | sudo apt-key add -
   - sudo apt-get update && sudo apt-get install bazel
@@ -22,7 +22,7 @@ matrix:
     addons:
       apt:
         sources:
-          - llvm-toolchain-trusty-4.0
+          - llvm-toolchain-xenial-4.0
         packages:
           - clang-format-4.0
     script:
@@ -60,7 +60,7 @@ matrix:
   #   addons:
   #     apt:
   #       sources:
-  #         - llvm-toolchain-trusty-4.0
+  #         - llvm-toolchain-xenial-4.0
   #       packages:
   #         - clang-4.0
   #         - clang-tidy-4.0
@@ -168,7 +168,7 @@ matrix:
     addons:
       apt:
         sources:
-          - llvm-toolchain-trusty-4.0
+          - llvm-toolchain-xenial-4.0
         packages:
           - clang-4.0
     script:
@@ -186,7 +186,7 @@ matrix:
     addons:
       apt:
         sources:
-          - llvm-toolchain-trusty-5.0
+          - llvm-toolchain-xenial-5.0
         packages:
           - clang-5.0
     script:
@@ -205,7 +205,7 @@ matrix:
       apt:
         sources:
           - ubuntu-toolchain-r-test
-          - llvm-toolchain-trusty-6.0
+          - llvm-toolchain-xenial-6.0
         packages:
           - clang-6.0
     script:

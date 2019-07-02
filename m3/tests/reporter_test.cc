@@ -44,6 +44,7 @@
 
 class ReporterTest : public ::testing::Test {
  protected:
+  // cppcheck-suppress unusedFunction
   virtual void SetUp() {
     server_ = std::shared_ptr<MockServer>(new MockServer("127.0.0.1", 0));
     thread_ = std::thread([this]() { server_->serve(); });
@@ -55,6 +56,7 @@ class ReporterTest : public ::testing::Test {
                     .Build();
   }
 
+  // cppcheck-suppress unusedFunction
   virtual void TearDown() {
     server_->stop();
     thread_.join();
